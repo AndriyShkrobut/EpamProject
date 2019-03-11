@@ -91,41 +91,6 @@ namespace WebShop.Controllers
       return View(product);
     }
 
-    // POST: Products/Edit/5
-    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Image,Price")] Product product)
-    //{
-    //  if (id != product.Id)
-    //  {
-    //    return NotFound();
-    //  }
-
-    //  if (ModelState.IsValid)
-    //  {
-    //    try
-    //    {
-    //      _context.Update(product);
-    //      await _context.SaveChangesAsync();
-    //    }
-    //    catch (DbUpdateConcurrencyException)
-    //    {
-    //      if (!ProductExists(product.Id))
-    //      {
-    //        return NotFound();
-    //      }
-    //      else
-    //      {
-    //        throw;
-    //      }
-    //    }
-    //    return RedirectToAction(nameof(Index));
-    //  }
-    //  return View(product);
-    //}
-
     [HttpPost, ActionName("Edit")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditPost(int? id)
