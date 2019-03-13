@@ -20,9 +20,18 @@ namespace WebShop.Controllers
     }
 
     // GET: Products
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string searchText)
     {
-      return View(await _context.Product.ToListAsync());
+      ViewData["CurrentFilter"] = searchText;
+
+      var products = from s in _context.Product select s;
+
+      if (!String.IsNullOrEmpty(searchText))
+      {
+        products = products.Where(s => s.Name.Contains(searchText) || s.Description.Contains(searchText));
+      }
+
+      return View(await products.AsNoTracking().ToListAsync());
     }
 
     // GET: Products/Details/5
