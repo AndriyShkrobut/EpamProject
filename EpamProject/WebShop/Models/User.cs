@@ -20,5 +20,7 @@ namespace WebShop.Models
     [DataType(DataType.EmailAddress)]
     [EmailAddress]
     public string Email { get; set; }
+
+    public ICollection<Order> Orders { get; set; }
   }
 }
