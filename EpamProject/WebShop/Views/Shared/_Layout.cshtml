@@ -31,12 +31,12 @@
             <li class="nav-item">
               <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
-            </li>
+            @*<li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
+              </li>*@
           </ul>
           <form asp-controller="Products" asp-action="Index" class="search" method="get">
             <input type="text" name="SearchText" class="search__input" value="@ViewData["CurrentFilter"]" placeholder="Type to Search" />

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using WebShop.Data;
+//using WebShop.Data;
 
 namespace WebShop
 {
@@ -16,25 +16,26 @@ namespace WebShop
   {
     public static void Main(string[] args)
     {
-      var host = CreateWebHostBuilder(args).Build();
+      CreateWebHostBuilder(args).Build().Run();
+      //var host = CreateWebHostBuilder(args).Build();
 
-      using (var scope = host.Services.CreateScope())
-      {
-        var services = scope.ServiceProvider;
+      //using (var scope = host.Services.CreateScope())
+      //{
+      //  var services = scope.ServiceProvider;
 
-        try
-        {
-          var context = services.GetRequiredService<WebShopContext>();
-          DataBaseInitializer.Initialize(context);
-        }
-        catch (Exception exception)
-        {
-          var logger = services.GetRequiredService<ILogger<Program>>();
-          logger.LogError(exception, "An erroк occured while seeding the database!");
-        }
-      }
+      //  try
+      //  {
+      //    var context = services.GetRequiredService<WebShopContext>();
+      //    DataBaseInitializer.Initialize(context);
+      //  }
+      //  catch (Exception exception)
+      //  {
+      //    var logger = services.GetRequiredService<ILogger<Program>>();
+      //    logger.LogError(exception, "An erroк occured while seeding the database!");
+      //  }
+      //}
 
-      host.Run();
+      //host.Run();
     }
 
     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

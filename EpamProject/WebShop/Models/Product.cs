@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,10 +9,24 @@ namespace WebShop.Models
 {
   public class Product
   {
-    public int Id { get; set; }
+    [Display(Name = "№")]
+    public int ID { get; set; }
+
+    [Display(Name = "Product Name")]
+    [StringLength(45)]
     public string Name { get; set; }
+
     public string Description { get; set; }
-    public string Image { get; set; }
+
+    [Display(Name = "Image")]
+    [DataType(DataType.ImageUrl)]
+    [Url]
+    public string ImageURL { get; set; }
+
+    [DataType(DataType.Currency)]
+    [Column(TypeName = "money")]
     public decimal Price { get; set; }
+
+    ICollection<OrderItem> OrderItems { get; set; }
   }
 }
