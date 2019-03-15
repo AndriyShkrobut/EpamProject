@@ -41,9 +41,6 @@ namespace WebShop
               options.UseSqlServer(Configuration.GetConnectionString("WebShopContext")));
       services.AddIdentity<User, IdentityRole>()
                   .AddEntityFrameworkStores<WebShopContext>();
-
-      services.AddDbContext<WebShopContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("WebShopContext")));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
