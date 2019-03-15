@@ -20,13 +20,12 @@ namespace WebShop.Models
 
     [Display(Name = "Image")]
     [DataType(DataType.ImageUrl)]
-    [Url]
     public string ImageURL { get; set; }
 
     [DataType(DataType.Currency)]
     [Column(TypeName = "money")]
     public decimal Price { get; set; }
 
-    ICollection<OrderItem> OrderItems { get; set; }
+    public ICollection<OrderItem> OrderItems { get; set; }
   }
 }
