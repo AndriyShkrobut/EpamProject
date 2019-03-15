@@ -11,8 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using WebShop.Models;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace WebShop
 {
@@ -40,6 +41,9 @@ namespace WebShop
               options.UseSqlServer(Configuration.GetConnectionString("ApplicationContext")));
       services.AddIdentity<User, IdentityRole>()
                   .AddEntityFrameworkStores<ApplicationContext>();
+
+      services.AddDbContext<WebShopContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("WebShopContext")));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,11 +60,25 @@ namespace WebShop
         app.UseHsts();
       }
 
+      var supportedCultures = new[]
+      {
+        new CultureInfo("en-US"),
+        new CultureInfo("ua-UA"),
+      };
+
+      app.UseRequestLocalization(new RequestLocalizationOptions
+      {
+        DefaultRequestCulture = new RequestCulture("en-US"),
+        // Formatting numbers, dates, etc.
+        SupportedCultures = supportedCultures,
+        // UI strings that we have localized.
+        SupportedUICultures = supportedCultures
+      });
+
       app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseCookiePolicy();
-       app.UseAuthentication();
-
+      app.UseAuthentication();
       app.UseMvc(routes =>
       {
         routes.MapRoute(

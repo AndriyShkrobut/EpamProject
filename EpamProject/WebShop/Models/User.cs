@@ -15,10 +15,10 @@ namespace WebShop.Models
     public string FullName { get; set; }
 
     [MinLength(6), MaxLength(25)]
+    [DataType(DataType.Password)]
     public string Password { get; set; }
 
     [DataType(DataType.EmailAddress)]
-    [EmailAddress]
     public string Email { get; set; }
 
     public ICollection<Order> Orders { get; set; }

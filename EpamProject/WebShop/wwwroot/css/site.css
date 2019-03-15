@@ -60,6 +60,18 @@ body {
   margin-right: 5px;
 }
 
+.catalog {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.catalog__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5% 0;
+}
+
 .footer {
   position: absolute;
   bottom: 0;

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<WebShop.Models.Product>
+
+@{
+  ViewData["Title"] = "Index";
+}
+
+<h1>Our Products</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+  </p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.ImageURL)
+        </th>
+        <th>
+          @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      *
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+          <img src="@Html.DisplayFor(modelItem => item.ImageURL)" alt="@Html.DisplayFor(modelItem => item.Name)" />
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+          <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+          <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+          <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>*@
+
+<div class="catalog">
+  @foreach (var item in Model)
+  {
+    <div class="catalog__item">
+      <div class="catalog__item__img_box">
+        <img src="@Html.DisplayFor(modelItem => item.ImageURL)" alt="@Html.DisplayFor(modelItem => item.Name)"
+             class="catalog__item__img" />
+      </div>
+      <h2 class="catalog__item__title">@Html.DisplayFor(modelItem => item.Name)</h2>
+      <h3 class="catalog__item__price">@Html.DisplayFor(modelItem => item.Price)</h3>
+      <buttom class="catalog__item__tocart btn__wide">buy</buttom>
+    </div>
+  }
+</div>
+

@@ -20,7 +20,6 @@ namespace WebShop.Models
 
     [Display(Name = "Image")]
     [DataType(DataType.ImageUrl)]
-    [Url]
     public string ImageURL { get; set; }
 
     [DataType(DataType.Currency)]
