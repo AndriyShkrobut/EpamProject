@@ -27,17 +27,20 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
-          <ul class="navbar-nav flex-grow-1">
-            <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-            </li>
-            @*<li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
-              </li>*@
-          </ul>
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Log in</a>
+                </li>
+                @*<li class="nav-item">
+          <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
+        </li>*@
+            </ul>
           <form asp-controller="Products" asp-action="Index" class="search" method="get">
             <input type="text" name="SearchText" class="search__input" value="@ViewData["CurrentFilter"]" placeholder="Type to Search" />
             <input type="submit" value="Search" class="btn btn-default" />

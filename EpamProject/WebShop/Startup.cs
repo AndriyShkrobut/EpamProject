@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WebShop.Models;
 
 namespace WebShop
 {
@@ -33,6 +36,10 @@ namespace WebShop
       });
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+      services.AddDbContext<ApplicationContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("ApplicationContext")));
+      services.AddIdentity<User, IdentityRole>()
+                  .AddEntityFrameworkStores<ApplicationContext>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +59,7 @@ namespace WebShop
       app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseCookiePolicy();
+       app.UseAuthentication();
 
       app.UseMvc(routes =>
       {
