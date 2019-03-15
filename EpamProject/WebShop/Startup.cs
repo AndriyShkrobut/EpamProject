@@ -37,10 +37,10 @@ namespace WebShop
       });
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-      services.AddDbContext<ApplicationContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("ApplicationContext")));
+      services.AddDbContext<WebShopContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("WebShopContext")));
       services.AddIdentity<User, IdentityRole>()
-                  .AddEntityFrameworkStores<ApplicationContext>();
+                  .AddEntityFrameworkStores<WebShopContext>();
 
       services.AddDbContext<WebShopContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("WebShopContext")));

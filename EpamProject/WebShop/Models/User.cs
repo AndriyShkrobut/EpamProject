@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 namespace WebShop.Models
 {
-  public class User:IdentityUser
-  {
-    /*public int ID { get; set; }*/
+    public class User : IdentityUser
+    {
+        public int ID;
 
-    [Display(Name = "Your Name")]
-    [StringLength(30)]
-    public string FullName { get; set; }
+        [Display(Name = "Your Name")]
+        [StringLength(30)]
+        public string FullName { get; set; }
 
-    [MinLength(6), MaxLength(25)]
-    [DataType(DataType.Password)]
-    public string Password { get; set; }
+        [MinLength(6), MaxLength(25)]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
 
-    [DataType(DataType.EmailAddress)]
-    public string Email { get; set; }
+        [DataType(DataType.EmailAddress)]
+        public override string Email { get; set; }
 
-    public ICollection<Order> Orders { get; set; }
-  }
+        public ICollection<Order> Orders { get; set; }
+    }
 }
