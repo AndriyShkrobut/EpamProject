@@ -27,7 +27,6 @@ namespace WebShop.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
@@ -40,7 +39,7 @@ namespace WebShop.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FullName = table.Column<string>(maxLength: 30, nullable: true),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
                     Password = table.Column<string>(maxLength: 25, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true)
                 },

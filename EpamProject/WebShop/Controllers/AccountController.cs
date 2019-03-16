@@ -29,19 +29,26 @@ namespace WebShop.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            User user = new User { Email = model.Email, UserName = model.FullName };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            User user = new User { Email = model.Email, UserName = model.UserName };
 
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, false);
-                return RedirectToAction("Index", "Home");
-            }
+            if (user.UserName[user.UserName.IndexOf(' ') + 1] == ' ' ||
+                user.UserName[0] == ' '
+                ) { ModelState.AddModelError(string.Empty, "Invalid name."); }
             else
             {
-                foreach (var error in result.Errors)
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    await _signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
             return View(model);

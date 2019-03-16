@@ -12,7 +12,7 @@ namespace WebShop.Models
 
     [Display(Name = "Your Name")]
     [StringLength(30)]
-    public string FullName { get; set; }
+    public override string UserName { get; set; }
 
     [MinLength(6), MaxLength(25)]
     [DataType(DataType.Password)]

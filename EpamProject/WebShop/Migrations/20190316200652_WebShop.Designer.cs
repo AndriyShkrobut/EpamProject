@@ -10,7 +10,7 @@ using WebShop.Models;
 namespace WebShop.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    [Migration("20190315214835_WebShop")]
+    [Migration("20190316200652_WebShop")]
     partial class WebShop
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -202,9 +202,6 @@ namespace WebShop.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("FullName")
-                        .HasMaxLength(30);
 
                     b.Property<bool>("LockoutEnabled");
 

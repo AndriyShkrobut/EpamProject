@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Identity;
 using WebShop.Models;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
-
 namespace WebShop
 {
   public class Startup
@@ -35,11 +34,19 @@ namespace WebShop
         options.CheckConsentNeeded = context => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
-
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
       services.AddDbContext<WebShopContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("WebShopContext")));
-      services.AddIdentity<User, IdentityRole>()
+      services.AddIdentity<User, IdentityRole>(opts => {
+          opts.Password.RequiredLength = 5;
+          opts.Password.RequireNonAlphanumeric = false;
+          opts.Password.RequireLowercase = true;
+          opts.Password.RequireUppercase = true;
+          opts.Password.RequireDigit = true;
+          opts.User.RequireUniqueEmail = true;
+          opts.User.AllowedUserNameCharacters = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm ";
+          
+      })
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<WebShopContext>();
     }
