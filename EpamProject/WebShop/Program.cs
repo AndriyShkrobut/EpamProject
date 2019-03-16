@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using WebShop.Data;
 using WebShop.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace WebShop
 {
@@ -23,6 +25,10 @@ namespace WebShop
         {
           var context = services.GetRequiredService<WebShopContext>();
           DataBaseInitializer.Initialize(context);
+          var userManager = services.GetRequiredService<UserManager<ShopUser>>();
+          var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+          Task t = RoleInitializer.InitializeAsync(userManager, rolesManager);
+          t.Wait();
         }
         catch (Exception exception)
         {

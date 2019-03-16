@@ -36,8 +36,18 @@ namespace WebShop
       services.AddDbContext<WebShopContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-      services.AddIdentity<ShopUser, IdentityRole>()
-                  .AddEntityFrameworkStores<WebShopContext>();
+      services.AddIdentity<ShopUser, IdentityRole>(opts =>
+      {
+        opts.Password.RequiredLength = 5;
+        opts.Password.RequireNonAlphanumeric = false;
+        opts.Password.RequireLowercase = true;
+        opts.Password.RequireUppercase = true;
+        opts.Password.RequireDigit = true;
+        opts.User.RequireUniqueEmail = true;
+        opts.User.AllowedUserNameCharacters = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm ";
+      })
+      .AddDefaultTokenProviders()
+      .AddEntityFrameworkStores<WebShopContext>();
 
       services.AddScoped<IProduct, ProductService>();
       services.AddScoped<ICart, CartService>();

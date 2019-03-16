@@ -8,8 +8,11 @@ namespace WebShop.Data.Models
   {
     public int ShopUserID;
 
-    public string FullName { get; set; }
+    [Display(Name = "Your Name")]
+    [StringLength(30)]
+    public override string UserName { get; set; }
 
+    [MinLength(6), MaxLength(25)]
     [DataType(DataType.Password)]
     public string Password { get; set; }
 

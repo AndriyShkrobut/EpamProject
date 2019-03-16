@@ -37,14 +37,38 @@
             <li class="nav-item">
               <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Log in</a>
-            </li>
+            @if (User.IsInRole("admin"))
+            {
+              <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Role</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+              </li>
+            }
           </ul>
           <form asp-controller="Products" asp-action="Index" class="search" method="get">
             <input type="text" name="SearchText" class="search__input" value="@ViewData["CurrentFilter"]" placeholder="Type to Search" />
             <input type="submit" value="Search" class="btn btn-default" />
           </form>
+          @if (User.Identity.IsAuthenticated)
+          {
+            <p class="navbar-nav flex-grow-1">Hello,@User.Identity.Name</p>
+            <form method="post" asp-controller="Account" asp-action="LogOff">
+              <input type="submit" value="Sign out" />
+            </form>
+          }
+          else
+          {
+            <ul class="navbar-nav flex-grow-1">
+              <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Sign in</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Registration</a>
+              </li>
+            </ul>
+          }
         </div>
       </div>
     </nav>

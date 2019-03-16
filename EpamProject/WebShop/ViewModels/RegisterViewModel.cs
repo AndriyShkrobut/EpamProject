@@ -10,14 +10,16 @@ namespace WebShop.ViewModels
     {
 
         [Required]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
         [Display(Name = "Name")]
-        public string FullName { get; set; }
+        public string UserName { get; set; }
         
         [Required]
+        [StringLength(100,ErrorMessage ="Error ",MinimumLength =5)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

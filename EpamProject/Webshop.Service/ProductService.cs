@@ -17,7 +17,7 @@ namespace Webshop.Service
       _context = context;
     }
 
-    public Task Create(Product product)
+    public Task Add(Product product)
     {
       throw new NotImplementedException();
     }
