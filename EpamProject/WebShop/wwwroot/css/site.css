@@ -62,7 +62,8 @@ body {
 
 .catalog {
   display: flex;
-  flex-flow: row wrap;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .catalog__item {
@@ -71,6 +72,29 @@ body {
   align-items: center;
   margin: 5% 0;
 }
+
+.catalog__item__img {
+  max-width: 500px;
+  z-index: 1;
+  align-self: center;
+}
+
+.catalog__item__img__box {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #FFF;
+  height: auto !important;
+  width: auto !important;
+}
+
+.catalog__item__details {
+  display: flex;
+}
+
 
 .footer {
   position: absolute;

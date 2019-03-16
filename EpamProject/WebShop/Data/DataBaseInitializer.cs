@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebShop.Models;
+using WebShop.Data;
+using WebShop.Data.Models;
 
 namespace WebShop.Data
 {
@@ -12,10 +13,10 @@ namespace WebShop.Data
     {
       context.Database.EnsureCreated();
 
-      //if (context.Product.Any())
-      //{
-      //  return;
-      //}
+      if (context.Products.Any())
+      {
+        return;
+      }
 
       var products = new Product[]
       {

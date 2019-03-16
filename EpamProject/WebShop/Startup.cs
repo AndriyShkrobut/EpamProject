@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using WebShop.Models;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using WebShop.Data.Models;
+using Webshop.Service;
+using WebShop.Data.Interfaces;
 
 namespace WebShop
 {
@@ -36,11 +33,17 @@ namespace WebShop
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
       services.AddDbContext<WebShopContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("WebShopContext")));
-      services.AddIdentity<User, IdentityRole>()
+              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+      services.AddIdentity<ShopUser, IdentityRole>()
                   .AddEntityFrameworkStores<WebShopContext>();
+
+      services.AddScoped<IProduct, ProductService>();
+      services.AddScoped<ICart, CartService>();
+
+
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +56,6 @@ namespace WebShop
       else
       {
         app.UseExceptionHandler("/Home/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
       }
 
@@ -66,9 +68,7 @@ namespace WebShop
       app.UseRequestLocalization(new RequestLocalizationOptions
       {
         DefaultRequestCulture = new RequestCulture("en-US"),
-        // Formatting numbers, dates, etc.
         SupportedCultures = supportedCultures,
-        // UI strings that we have localized.
         SupportedUICultures = supportedCultures
       });
 
