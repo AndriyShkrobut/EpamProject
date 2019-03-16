@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebShop.ViewModels;
 using WebShop.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebShop.Controllers
 {
@@ -45,6 +46,7 @@ namespace WebShop.Controllers
             }
             return View(model);
         }
+
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
