@@ -175,13 +175,13 @@ namespace WebShop.Migrations
                 name: "Order",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    OrderID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.ID);
+                    table.PrimaryKey("PK_Order", x => x.OrderID);
                     table.ForeignKey(
                         name: "FK_Order_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -207,7 +207,7 @@ namespace WebShop.Migrations
                         name: "FK_OrderItem_Order_OrderID",
                         column: x => x.OrderID,
                         principalTable: "Order",
-                        principalColumn: "ID",
+                        principalColumn: "OrderID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderItem_Product_ProductID",

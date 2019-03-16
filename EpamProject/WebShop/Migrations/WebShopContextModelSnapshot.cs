@@ -131,13 +131,13 @@ namespace WebShop.Migrations
 
             modelBuilder.Entity("WebShop.Models.Order", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("ID");
+                    b.HasKey("OrderID");
 
                     b.HasIndex("UserId");
 
