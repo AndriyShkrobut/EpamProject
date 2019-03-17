@@ -14,84 +14,84 @@ using WebShop.Data.Interfaces;
 
 namespace WebShop
 {
-  public class Startup
-  {
-    public Startup(IConfiguration configuration)
+    public class Startup
     {
-      Configuration = configuration;
-    }
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
-    public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
-      services.Configure<CookiePolicyOptions>(options =>
-      {
-        // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-        options.CheckConsentNeeded = context => true;
-        options.MinimumSameSitePolicy = SameSiteMode.None;
-      });
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+          // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+          options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
-      services.AddDbContext<WebShopContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<WebShopContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-      services.AddIdentity<ShopUser, IdentityRole>(opts =>
-      {
-        opts.Password.RequiredLength = 5;
-        opts.Password.RequireNonAlphanumeric = false;
-        opts.Password.RequireLowercase = true;
-        opts.Password.RequireUppercase = true;
-        opts.Password.RequireDigit = true;
-        opts.User.RequireUniqueEmail = true;
-        opts.User.AllowedUserNameCharacters = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm ";
-      })
-      .AddDefaultTokenProviders()
-      .AddEntityFrameworkStores<WebShopContext>();
+            services.AddIdentity<ShopUser, IdentityRole>(opts =>
+            {
+                opts.Password.RequiredLength = 5;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireLowercase = true;
+                opts.Password.RequireUppercase = true;
+                opts.Password.RequireDigit = true;
+                opts.User.RequireUniqueEmail = true;
+                opts.User.AllowedUserNameCharacters = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm ";
+            })
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<WebShopContext>();
 
-      services.AddScoped<IProduct, ProductService>();
-      services.AddScoped<ICart, CartService>();
+            services.AddScoped<IProduct, ProductService>();
+            services.AddScoped<ICart, CartService>();
 
 
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-    }
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-    {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-      else
-      {
-        app.UseExceptionHandler("/Home/Error");
-        app.UseHsts();
-      }
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
 
-      var supportedCultures = new[]
-      {
+            var supportedCultures = new[]
+            {
         new CultureInfo("en-US"),
         new CultureInfo("ua-UA"),
       };
 
-      app.UseRequestLocalization(new RequestLocalizationOptions
-      {
-        DefaultRequestCulture = new RequestCulture("en-US"),
-        SupportedCultures = supportedCultures,
-        SupportedUICultures = supportedCultures
-      });
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
-      app.UseHttpsRedirection();
-      app.UseStaticFiles();
-      app.UseCookiePolicy();
-      app.UseAuthentication();
-      app.UseMvc(routes =>
-      {
-        routes.MapRoute(
-                  name: "default",
-                  template: "{controller=Home}/{action=Index}/{id?}");
-      });
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
+            app.UseAuthentication();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
     }
-  }
 }

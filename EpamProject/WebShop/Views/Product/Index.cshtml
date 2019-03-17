@@ -1,23 +1,22 @@
 ﻿@model WebShop.ViewModels.Product.ProductIndexModel
 
 @{
-  ViewData["Title"] = "Catalog";
+    ViewData["Title"] = "Catalog";
 }
 
 <h1>Products</h1>
 
 <div class="catalog">
-  @foreach (var product in Model.ProductList)
-  {
-    <div class="catalog__item">
-      <div class="catalog__item__img__box">
-        <img src="@product.ImageURL" alt="@product.Name)"
-             class="catalog__item__img" />
-      </div>
-      <h2><a asp-controller="Product" asp-action="Details" asp-route-id="@product.ID">@product.Name</a></h2>
-      <h3 class="catalog__item__price">@string.Format("{0:C}", product.Price)</h3>
-      <buttom class="catalog__item__tocart btn btn-default">buy</buttom>
-    </div>
-    <a asp-action="Delete" asp-route-id="@product.ID">Delete</a>
-  }
+    @foreach (var product in Model.ProductList)
+    {
+        <div class="catalog__item">
+            <div class="catalog__item__img__box">
+                <img src="@product.ImageURL" alt="@product.Name)"
+                     class="catalog__item__img" />
+            </div>
+            <h2><a asp-controller="Product" asp-action="Details" asp-route-id="@product.ID" class="catalog__item__name">@product.Name</a></h2>
+            <h3 class="catalog__item__price">@string.Format("{0:C}", product.Price)</h3>
+            <a asp-controller="Cart" asp-action="Add" asp-route-id="@product.ID" class="catalog__item__tocart btn btn-default">buy</a>
+        </div>
+    }
 </div>

@@ -154,7 +154,7 @@ namespace WebShop.Data.Migrations
 
                     b.Property<int?>("CartID");
 
-                    b.Property<int>("ProductID");
+                    b.Property<int?>("ProductID");
 
                     b.Property<decimal>("Total");
 
@@ -162,8 +162,7 @@ namespace WebShop.Data.Migrations
 
                     b.HasIndex("CartID");
 
-                    b.HasIndex("ProductID")
-                        .IsUnique();
+                    b.HasIndex("ProductID");
 
                     b.ToTable("CartItems");
                 });
@@ -301,9 +300,8 @@ namespace WebShop.Data.Migrations
                         .HasForeignKey("CartID");
 
                     b.HasOne("WebShop.Data.Models.Product", "Product")
-                        .WithOne("CartItem")
-                        .HasForeignKey("WebShop.Data.Models.CartItem", "ProductID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("ProductID");
                 });
 #pragma warning restore 612, 618
         }

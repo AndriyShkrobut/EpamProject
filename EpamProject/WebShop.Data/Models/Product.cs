@@ -6,22 +6,20 @@ using System.Text;
 
 namespace WebShop.Data.Models
 {
-  public class Product
-  {
-    public int ID { get; set; }
+    public class Product
+    {
+        public int ID { get; set; }
 
-    [Display(Name = "Product Name")]
-    public string Name { get; set; }
+        [Display(Name = "Product Name")]
+        public string Name { get; set; }
 
-    public string Description { get; set; }
+        public string Description { get; set; }
 
-    [DataType(DataType.ImageUrl)]
-    public string ImageURL { get; set; }
+        [DataType(DataType.ImageUrl)]
+        public string ImageURL { get; set; }
 
-    [DataType(DataType.Currency)]
-    [Column(TypeName = "money")]
-    public decimal Price { get; set; }
-
-    public virtual CartItem CartItem { get; set; }
-  }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "money")]
+        public decimal Price { get; set; }
+    }
 }
