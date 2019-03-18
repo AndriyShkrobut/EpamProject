@@ -18,8 +18,7 @@
                 </div>
                 <h2><a asp-action="Details" asp-route-id="@product.ID" class="catalog__item__name">@product.Name</a></h2>
                 <h3 class="catalog__item__price">@string.Format("{0:C}", product.Price)</h3>
-                buy
-                <input type="submit" asp-action="AddToCart" asp-route-id="@product.ID" class="catalog__item__tocart btn btn-default">
+                <input type="submit" asp-action="AddToCart" asp-route-id="@product.ID" value="buy" class="catalog__item__tocart btn btn-default">
                 <a asp-action="Delete" asp-route-id="@product.ID">Delete</a>
 
                 <input type="hidden" asp-for="@product.ID" name="id" />

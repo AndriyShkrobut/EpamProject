@@ -15,9 +15,12 @@ namespace WebShop.Data.Interfaces
         Cart GetByUserID(string id);
         Task Add(Cart cart);
         Task AddCartItem(CartItem cartItem);
+        Task DeleteCartItem(CartItem cartItem);
         Task AddItemToCart(Product product, string id);
+
+        int DeleteItemFromCart(CartItem cartItem, string id);
+        void Clear(string id);
+
         Task Delete(int id);
-        Task Clear();
-        Task GetTotal();
     }
 }

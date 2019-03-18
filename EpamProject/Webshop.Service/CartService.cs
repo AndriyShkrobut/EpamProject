@@ -62,6 +62,12 @@ namespace Webshop.Service
             await _context.CartItems.AddAsync(cartItem);
         }
 
+        public async Task DeleteCartItem(CartItem cartItem)
+        {
+            _context.CartItems.Remove(cartItem);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task AddItemToCart(Product product, string id)
         {
             var user = _userService.GetById(id);
@@ -91,8 +97,33 @@ namespace Webshop.Service
             else
             {
                 shoppingCartItem.Amount++;
+                shoppingCartItem.Total = shoppingCartItem.Amount * shoppingCartItem.Product.Price;
             }
             _context.SaveChanges();
+        }
+
+        public int DeleteItemFromCart(CartItem cartItem, string id)
+        {
+            var cart = GetByUserID(id);
+
+            var shoppingCartItem = _context.CartItems.SingleOrDefault(ci => ci.CartItemID == cartItem.CartItemID && ci.CartID == cart.CartID);
+
+            var localAmount = 0;
+
+            if (shoppingCartItem != null)
+            {
+                if (shoppingCartItem.Amount > 1)
+                {
+                    shoppingCartItem.Amount--;
+                    localAmount = shoppingCartItem.Amount;
+                }
+                else
+                {
+                    _context.CartItems.Remove(shoppingCartItem);
+                }
+            }
+            _context.SaveChanges();
+            return localAmount;
         }
 
         public async Task Delete(int id)
@@ -102,9 +133,11 @@ namespace Webshop.Service
             await _context.SaveChangesAsync();
         }
 
-        public Task Clear()
+        public void Clear(string id)
         {
-            throw new System.NotImplementedException();
+            var cart = GetByUserID(id);
+            _context.CartItems.RemoveRange(cart.CartItems);
+            _context.SaveChanges();
         }
 
         public Task GetTotal()

@@ -12,5 +12,6 @@ namespace WebShop.ViewModels.Cart
         public string ImageURL { get; set; }
         public decimal Price { get; set; }
         public int Amount { get; set; }
+        public int ProductID { get; set; }
     }
 }
