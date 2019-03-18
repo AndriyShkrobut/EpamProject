@@ -11,133 +11,138 @@ using WebShop.Data.Models;
 
 namespace WebShop.Controllers
 {
-  [Authorize(Roles = "admin")]
-  public class UsersController : Controller
-  {
-    UserManager<ShopUser> _userManager;
-
-    public UsersController(UserManager<ShopUser> userManager)
+    [Authorize(Roles = "admin")]
+    public class UsersController : Controller
     {
-      _userManager = userManager;
-    }
-    public IActionResult Index() => View(_userManager.Users.ToList());
-    public IActionResult Create() => View();
+        UserManager<ShopUser> _userManager;
 
-    [HttpPost]
-    public async Task<IActionResult> Create(CreateUserViewModel model)
-    {
-      if (ModelState.IsValid)
-      {
-        ShopUser user = new ShopUser { Email = model.Email, UserName = model.UserName };
-        var result = await _userManager.CreateAsync(user, model.Password);
-        if (result.Succeeded)
+        public UsersController(UserManager<ShopUser> userManager)
         {
-          return RedirectToAction("Index");
+            _userManager = userManager;
         }
-        else
+        public IActionResult Index() => View(_userManager.Users.ToList());
+        public IActionResult Create() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateUserViewModel model)
         {
-          foreach (var error in result.Errors)
-          {
-            ModelState.AddModelError(string.Empty, error.Description);
-          }
-        }
-      }
-      return View(model);
-    }
-
-    public async Task<IActionResult> Edit(string id)
-    {
-      ShopUser user = await _userManager.FindByIdAsync(id);
-      if (user == null)
-      {
-        return NotFound();
-      }
-      EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, UserName = user.UserName };
-      return View(model);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Edit(EditUserViewModel model)
-    {
-      if (ModelState.IsValid)
-      {
-        ShopUser user = await _userManager.FindByIdAsync(model.Id);
-        if (user != null)
-        {
-          user.Email = model.Email;
-          user.UserName = model.UserName;
-
-          var result = await _userManager.UpdateAsync(user);
-          if (result.Succeeded)
-          {
-            return RedirectToAction("Index");
-          }
-          else
-          {
-            foreach (var error in result.Errors)
+            if (ModelState.IsValid)
             {
-              ModelState.AddModelError(string.Empty, error.Description);
+                ShopUser user = new ShopUser
+                {
+                    Email = model.Email,
+                    UserName = model.UserName
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
             }
-          }
-        }
-        else
-        {
-          ModelState.AddModelError(string.Empty, "ShopUser not found");
+            return View(model);
         }
 
-      }
-      return View(model);
-    }
-    [HttpPost]
-    public async Task<IActionResult> Delete(string id)
-    {
-      ShopUser user = await _userManager.FindByIdAsync(id);
-      if (user != null)
-      {
-        IdentityResult result = await _userManager.DeleteAsync(user);
-      }
-      return RedirectToAction("Index");
-    }
-
-    public async Task<IActionResult> ChangePassword(string id)
-    {
-      ShopUser user = await _userManager.FindByIdAsync(id);
-      if (user == null)
-      {
-        return NotFound();
-      }
-      ChangePasswordViewModel model = new ChangePasswordViewModel { Id = user.Id, Name = user.UserName };
-      return View(model);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
-    {
-      if (ModelState.IsValid)
-      {
-        ShopUser user = await _userManager.FindByIdAsync(model.Id);
-        if (user != null)
+        public async Task<IActionResult> Edit(string id)
         {
-          IdentityResult result =
-              await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-          if (result.Succeeded)
-          {
-            return RedirectToAction("Index");
-          }
-          else
-          {
-            foreach (var error in result.Errors)
+            ShopUser user = await _userManager.FindByIdAsync(id);
+            if (user == null)
             {
-              ModelState.AddModelError(string.Empty, error.Description);
+                return NotFound();
             }
-          }
+            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email, UserName = user.UserName };
+            return View(model);
         }
-        else
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditUserViewModel model)
         {
-          ModelState.AddModelError(string.Empty, "ShopUser not found");
+            if (ModelState.IsValid)
+            {
+                ShopUser user = await _userManager.FindByIdAsync(model.Id);
+                if (user != null)
+                {
+                    user.Email = model.Email;
+                    user.UserName = model.UserName;
+
+                    var result = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "ShopUser not found");
+                }
+
+            }
+            return View(model);
         }
-      }
-      return View(model);
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            ShopUser user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+            }
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> ChangePassword(string id)
+        {
+            ShopUser user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            ChangePasswordViewModel model = new ChangePasswordViewModel { Id = user.Id, Name = user.UserName };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ShopUser user = await _userManager.FindByIdAsync(model.Id);
+                if (user != null)
+                {
+                    IdentityResult result =
+                        await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "ShopUser not found");
+                }
+            }
+            return View(model);
+        }
     }
-  }
 }

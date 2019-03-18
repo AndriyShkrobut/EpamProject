@@ -152,18 +152,18 @@ namespace WebShop.Data.Migrations
 
                     b.Property<int>("Amount");
 
-                    b.Property<int?>("CartID");
+                    b.Property<int>("CartID");
 
-                    b.Property<int>("ProductID");
+                    b.Property<int?>("ProductID");
 
-                    b.Property<decimal>("Total");
+                    b.Property<decimal>("Total")
+                        .HasColumnType("money");
 
                     b.HasKey("CartItemID");
 
                     b.HasIndex("CartID");
 
-                    b.HasIndex("ProductID")
-                        .IsUnique();
+                    b.HasIndex("ProductID");
 
                     b.ToTable("CartItems");
                 });
@@ -212,9 +212,6 @@ namespace WebShop.Data.Migrations
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
-
-                    b.Property<string>("Password")
-                        .HasMaxLength(25);
 
                     b.Property<string>("PasswordHash");
 
@@ -296,14 +293,14 @@ namespace WebShop.Data.Migrations
 
             modelBuilder.Entity("WebShop.Data.Models.CartItem", b =>
                 {
-                    b.HasOne("WebShop.Data.Models.Cart")
+                    b.HasOne("WebShop.Data.Models.Cart", "Cart")
                         .WithMany("CartItems")
-                        .HasForeignKey("CartID");
+                        .HasForeignKey("CartID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebShop.Data.Models.Product", "Product")
-                        .WithOne("CartItem")
-                        .HasForeignKey("WebShop.Data.Models.CartItem", "ProductID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("ProductID");
                 });
 #pragma warning restore 612, 618
         }

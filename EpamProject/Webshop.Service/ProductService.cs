@@ -8,34 +8,40 @@ using WebShop.Data.Models;
 
 namespace Webshop.Service
 {
-  public class ProductService : IProduct
-  {
-    private readonly WebShopContext _context;
-
-    public ProductService(WebShopContext context)
+    public class ProductService : IProduct
     {
-      _context = context;
-    }
+        private readonly WebShopContext _context;
+        private readonly IShopUser _userService;
 
-    public Task Add(Product product)
-    {
-      throw new NotImplementedException();
-    }
+        public ProductService(WebShopContext context, IShopUser userService)
+        {
+            _context = context;
+            _userService = userService;
+        }
 
-    public Task Delete(int productID)
-    {
-      throw new NotImplementedException();
-    }
+        public Product GetByID(int id)
+        {
+            var product = _context.Products.Where(p => p.ID == id).FirstOrDefault();
+            return product;
+        }
 
-    public IEnumerable<Product> GetAll()
-    {
-      return _context.Products;
-    }
+        public IEnumerable<Product> GetAll()
+        {
+            return _context.Products;
+        }
 
-    public Product GetByID(int id)
-    {
-      var product = _context.Products.Where(p => p.ID == id).FirstOrDefault();
-      return product;
+
+        public async Task Add(Product product)
+        {
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var product = GetByID(id);
+            _context.Remove(product);
+            await _context.SaveChangesAsync();
+        }
     }
-  }
 }

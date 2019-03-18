@@ -1,20 +1,20 @@
 ﻿@model WebShop.ViewModels.Product.ProductDetailModel
 
 @{
-  ViewData["Title"] = Model.Name;
+    ViewData["Title"] = Model.Name;
 }
 
 <a asp-controller="Product" asp-action="Index">Back to Catalog</a>
-<div class="catalog__item__details">
-  <div class="catalog__item__img__box">
-    <img src="@Model.ImageURL" alt="@Model.Name)"
-         class="catalog__item__img" />
-  </div>
-  <div>
-    <h1>@Model.Name</h1>
-    <h2 class="catalog__item__description">@Model.Description</h2>
-    <h3 class="catalog__item__price">@string.Format("{0:C}", Model.Price)</h3>
-    <buttom class="catalog__item__tocart btn btn-default">Add to Cart</buttom>
-  </div>
-</div>
+<form asp-action="AddToCart" method="post" class="catalog__item__details">
+    <div class="catalog__item__img__box">
+        <img src="@Model.ImageURL" alt="@Model.Name)"
+             class="catalog__item__img" />
+    </div>
+    <div>
+        <h1 class="catalog__item__name">@Model.Name</h1>
+        <h2 class="catalog__item__description">@Model.Description</h2>
+        <h3 class="catalog__item__price">@string.Format("{0:C}", Model.Price)</h3>
+        <input type="submit" asp-action="AddToCart" asp-route-id="@Model.ID" value="add to cart" class="catalog__item__tocart btn btn-default">
+    </div>
+</form>
 

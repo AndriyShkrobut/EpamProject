@@ -24,5 +24,4 @@
     <ProjectReference Include="..\WebShop.Data\WebShop.Data.csproj" />
     <ProjectReference Include="..\Webshop.Service\Webshop.Service.csproj" />
   </ItemGroup>
-
 </Project>
