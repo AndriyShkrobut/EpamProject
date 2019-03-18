@@ -1,4 +1,5 @@
 ﻿@model WebShop.ViewModels.Cart.CartIndexModel
+@Html.AntiForgeryToken()
 
 
 @{
@@ -26,7 +27,6 @@
                     <button data-id="@cartItem.ID" id="minus">-</button><input type="text" id="amount-@cartItem.ID" value="@cartItem.Amount">
                     <input type="submit" asp-action="RemoveFromCart" asp-route-id="@cartItem.ID" class="catalog__item__tocart btn btn-default" value="Remove Item">
                 </div>
-                @*<input type="submit" name="removeItem" value="-" />*@
                 <input type="hidden" asp-for="@cartItem.ID" name="id" />
                 <input type="hidden" asp-for="@cartItem.Name" name="name" />
                 <input type="hidden" asp-for="@cartItem.ImageURL" name="imageURL" />
@@ -50,17 +50,6 @@ else
 }
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
-    //$("amount").change(function () {
-    //    $.ajax({
-    //        method: 'POST',
-    //        url: '/Cart/UpdateTotal',
-    //        data: { amount: $("#drop2").val(), id:  }, // Pass value that you want to controller.
-    //        success: function (data) {
-    //            $("#total").val(data); //Implement partial refreshing.
-    //        }
-    //    })
-    //})
-
     $("#minus").click(function (e) {
         // Get the id from the link
         var recordToDelete = $(this).attr("data-id");
@@ -70,6 +59,10 @@ else
             $.ajax({
                 method: 'POST',
                 url: 'Cart/RemoveFromCart',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
                 data: { id: recordToDelete },
                 success: function (data) {
                     if (data.ItemCount == 0) {
@@ -77,6 +70,9 @@ else
                     } else {
                         $('#amount-' + data.ID).text(data.Amount);
                     }
+                },
+                failure: function (response) {
+                    alert(response);
                 }
             })
         }
