@@ -19,6 +19,7 @@ namespace WebShop.Data.Interfaces
         Task AddItemToCart(Product product, string id);
 
         int DeleteItemFromCart(CartItem cartItem, string id);
+        int DeleteItemFromCartAtAll(CartItem cartItem, string id);
         void Clear(string id);
 
         Task Delete(int id);

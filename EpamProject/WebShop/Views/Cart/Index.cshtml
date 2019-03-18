@@ -29,7 +29,7 @@
                     <h2>@cartItem.Amount</h2>
                     <a asp-controller="Product" asp-action="AddTocart" asp-route-id="@cartItem.ProductID">+</a>
 
-                    <input type="submit" asp-action="RemoveFromCart" asp-route-id="@cartItem.ID" class="catalog__item__tocart btn btn-default" value="Remove Item">
+                    <input type="submit" asp-action="RemoveFromCartAtAll" asp-route-id="@cartItem.ID" class="catalog__item__tocart btn btn-default" value="Remove Item">
                 </div>
                 <input type="hidden" asp-for="@cartItem.ID" name="id" />
                 <input type="hidden" asp-for="@cartItem.Name" name="name" />

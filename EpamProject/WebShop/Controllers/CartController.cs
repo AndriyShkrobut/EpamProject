@@ -68,6 +68,14 @@ namespace WebShop.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult RemoveFromCartAtAll(int id)
+        {
+            var cartItem = _cartItemService.GetByID(id);
+            var UserID = _userManager.GetUserId(User);
+            _cartService.DeleteItemFromCartAtAll(cartItem, UserID);
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult RemoveAllItems()
