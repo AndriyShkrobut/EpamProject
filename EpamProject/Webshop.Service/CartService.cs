@@ -10,14 +10,20 @@ namespace Webshop.Service
     public class CartService : ICart
     {
         private readonly WebShopContext _context;
-        //private readonly 
+        private readonly IShopUser _userService;
+
+        public CartService(WebShopContext context, IShopUser userService)
+        {
+            _context = context;
+            _userService = userService;
+        }
 
         public CartService(WebShopContext context)
         {
             _context = context;
         }
 
-        public Cart GetByID(string id)
+        public Cart GetByID(int id)
         {
             return _context.Carts.Where(cart => cart.CartID == id)
                 .Include(cart => cart.CartItems)
@@ -40,12 +46,14 @@ namespace Webshop.Service
 
         public Cart GetByUserID(string id)
         {
-            return _context.Carts.Where(cart => cart.ShopUser.Id == id).SingleOrDefault();
+            return _context.Carts.Where(cart => cart.ShopUser.Id == id)
+                .Include(c => c.CartItems).ThenInclude(ci => ci.Product)
+                .SingleOrDefault();
         }
 
         public async Task Add(Cart cart)
         {
-            _context.Add(cart);
+            _context.Carts.Add(cart);
             await _context.SaveChangesAsync();
         }
 
@@ -54,12 +62,40 @@ namespace Webshop.Service
             await _context.CartItems.AddAsync(cartItem);
         }
 
-        public Task AddItemToCart(string id)
+        public async Task AddItemToCart(Product product, string id)
         {
-            throw new System.NotImplementedException();
+            var user = _userService.GetById(id);
+
+            var cart = GetByUserID(id);
+            if (cart == null)
+            {
+                _context.Carts.Add(new Cart { ShopUser = user });
+                _context.SaveChanges();
+            }
+            cart = GetByUserID(id);
+
+            var shoppingCartItem = _context.CartItems.SingleOrDefault(ci => ci.Product.ID == product.ID && ci.CartID == cart.CartID);
+
+            if (shoppingCartItem == null)
+            {
+                shoppingCartItem = new CartItem
+                {
+                    CartID = cart.CartID,
+                    Product = product,
+                    Amount = 1,
+                    Total = product.Price
+                };
+
+                await AddCartItem(shoppingCartItem);
+            }
+            else
+            {
+                shoppingCartItem.Amount++;
+            }
+            _context.SaveChanges();
         }
 
-        public async Task Delete(string id)
+        public async Task Delete(int id)
         {
             var cart = GetByID(id);
             _context.Remove(cart);

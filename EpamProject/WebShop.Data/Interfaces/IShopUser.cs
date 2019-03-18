@@ -9,6 +9,5 @@ namespace WebShop.Data.Interfaces
     {
         ShopUser GetById(string id);
         IEnumerable<ShopUser> GetAll();
-
     }
 }

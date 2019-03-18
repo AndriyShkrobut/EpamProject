@@ -4,7 +4,7 @@ namespace WebShop.Data.Models
 {
     public class Cart
     {
-        public string CartID { get; set; }
+        public int CartID { get; set; }
 
         public virtual ShopUser ShopUser { get; set; }
 

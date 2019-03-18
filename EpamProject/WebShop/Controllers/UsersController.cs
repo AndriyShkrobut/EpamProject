@@ -35,10 +35,6 @@ namespace WebShop.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
-                //var UserCart = new Cart
-                //{
-
-                //}
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index");

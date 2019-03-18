@@ -6,7 +6,7 @@ namespace WebShop.Data.Interfaces
 {
     public interface ICart
     {
-        Cart GetByID(string id);
+        Cart GetByID(int id);
         IEnumerable<Cart> GetAll();
 
         //User ID
@@ -15,8 +15,8 @@ namespace WebShop.Data.Interfaces
         Cart GetByUserID(string id);
         Task Add(Cart cart);
         Task AddCartItem(CartItem cartItem);
-        Task AddItemToCart(string id);
-        Task Delete(string id);
+        Task AddItemToCart(Product product, string id);
+        Task Delete(int id);
         Task Clear();
         Task GetTotal();
     }

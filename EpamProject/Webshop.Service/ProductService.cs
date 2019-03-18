@@ -11,10 +11,12 @@ namespace Webshop.Service
     public class ProductService : IProduct
     {
         private readonly WebShopContext _context;
+        private readonly IShopUser _userService;
 
-        public ProductService(WebShopContext context)
+        public ProductService(WebShopContext context, IShopUser userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         public Product GetByID(int id)

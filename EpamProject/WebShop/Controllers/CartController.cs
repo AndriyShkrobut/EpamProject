@@ -33,7 +33,7 @@ namespace WebShop.Controllers
             var UserID = _userManager.GetUserId(User);
             if (User.Identity.IsAuthenticated)
             {
-                IEnumerable<CartListingModel> cartItems = _cartService.GetItems(UserID).Select(cartItem => new CartListingModel
+                IEnumerable<CartListingModel> cartItems = _cartService.GetByUserID(UserID).CartItems.Select(cartItem => new CartListingModel
                 {
                     ID = cartItem.CartItemID,
                     Name = cartItem.Product.Name,
@@ -55,12 +55,5 @@ namespace WebShop.Controllers
             }
 
         }
-
-
-        //[HttpPost]
-        //public IActionResult Add(int id)
-        //{
-
-        //}
     }
 }
