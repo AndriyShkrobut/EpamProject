@@ -6,6 +6,7 @@ using WebShop.Data.Models;
 
 namespace WebShop.Controllers
 {
+
   public class AccountController : Controller
   {
     private readonly UserManager<ShopUser> _userManager;
