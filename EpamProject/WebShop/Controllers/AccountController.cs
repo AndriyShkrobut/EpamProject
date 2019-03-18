@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebShop.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using WebShop.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WebShop.Controllers
 {
@@ -27,8 +28,8 @@ namespace WebShop.Controllers
     {
       ShopUser user = new ShopUser { Email = model.Email, UserName = model.UserName };
 
-      if (user.UserName[user.UserName.IndexOf(' ') + 1] == ' ' ||
-          user.UserName[0] == ' '
+            if (user.UserName[user.UserName.IndexOf(' ') + 1] == ' ' ||
+          user.UserName[0] == ' '|| user.UserName==""
           )
       { ModelState.AddModelError(string.Empty, "Invalid name."); }
       else
@@ -36,7 +37,8 @@ namespace WebShop.Controllers
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
-          await _signInManager.SignInAsync(user, false);
+            await _signInManager.SignInAsync(user, false);
+            await _userManager.AddToRoleAsync(user, "user");
           return RedirectToAction("Index", "Home");
         }
         else
