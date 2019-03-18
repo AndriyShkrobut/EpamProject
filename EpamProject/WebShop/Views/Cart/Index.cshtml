@@ -18,19 +18,24 @@
         <div class="catalog">
             @foreach (var cartItem in Model.CartItemsList)
             {
-                <div class="catalog__item">
+                <div id="item-@cartItem.ID" class="catalog__item">
                     <div class="catalog__item__img__box">
                         <img src="@cartItem.ImageURL" alt="@cartItem.Name)" class="catalog__item__img" />
                     </div>
                     <h2><a asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ProductID" class="catalog__item__name">@cartItem.Name</a></h2>
                     <h3 class="catalog__item__price">@string.Format("{0:C}", cartItem.Price)</h3>
-                    <button data-id="@cartItem.ID" id="minus">-</button><input type="text" id="amount-@cartItem.ID" value="@cartItem.Amount">
+
+                    <a asp-action="RemoveFromCart" asp-route-id="@cartItem.ID">-</a>
+                    <h2>@cartItem.Amount</h2>
+                    <a asp-controller="Product" asp-action="AddTocart" asp-route-id="@cartItem.ProductID">+</a>
+
                     <input type="submit" asp-action="RemoveFromCart" asp-route-id="@cartItem.ID" class="catalog__item__tocart btn btn-default" value="Remove Item">
                 </div>
                 <input type="hidden" asp-for="@cartItem.ID" name="id" />
                 <input type="hidden" asp-for="@cartItem.Name" name="name" />
                 <input type="hidden" asp-for="@cartItem.ImageURL" name="imageURL" />
                 <input type="hidden" asp-for="@cartItem.Price" name="price" />
+                <input type="hidden" asp-for="@cartItem.ProductID" name="productID" />
             }
         </div>
         Total:
@@ -48,34 +53,4 @@ else
 {
     <h2>No Items</h2>
 }
-<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript">
-    $("#minus").click(function (e) {
-        // Get the id from the link
-        var recordToDelete = $(this).attr("data-id");
-        e.preventDefault();
-        if (recordToDelete != '') {
-            // Perform the ajax post
-            $.ajax({
-                method: 'POST',
-                url: 'Cart/RemoveFromCart',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                data: { id: recordToDelete },
-                success: function (data) {
-                    if (data.ItemCount == 0) {
-                        $('#row-' + data.DeleteId).fadeOut('slow');
-                    } else {
-                        $('#amount-' + data.ID).text(data.Amount);
-                    }
-                },
-                failure: function (response) {
-                    alert(response);
-                }
-            })
-        }
-    });
-</script>
 

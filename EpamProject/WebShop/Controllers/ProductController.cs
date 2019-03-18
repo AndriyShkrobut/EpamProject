@@ -47,8 +47,8 @@ namespace WebShop.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public IActionResult AddToCart(int id)
         {
             var product = _productService.GetByID(id);
