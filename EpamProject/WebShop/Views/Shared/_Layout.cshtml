@@ -47,7 +47,7 @@
                             </li>
                         }
                     </ul>
-                    <form asp-controller="Products" asp-action="Index" class="search" method="get">
+                    <form asp-controller="Products" asp-action="Search" class="search" method="get">
                         <input type="text" name="SearchText" class="search__input" value="@ViewData["CurrentFilter"]" placeholder="Type to Search" />
                         <input type="submit" value="Search" class="btn btn-default" />
                     </form>

@@ -17,20 +17,10 @@ namespace Webshop.Service
             _context = context;
         }
 
-        public Task Add(Product product)
+        public Product GetByID(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task AddToCart(Product product)
-        {
-            _context.Add(product);
-            await _context.SaveChangesAsync();
-        }
-
-        public Task Delete(int productID)
-        {
-            throw new NotImplementedException();
+            var product = _context.Products.Where(p => p.ID == id).FirstOrDefault();
+            return product;
         }
 
         public IEnumerable<Product> GetAll()
@@ -38,10 +28,18 @@ namespace Webshop.Service
             return _context.Products;
         }
 
-        public Product GetByID(int id)
+
+        public async Task Add(Product product)
         {
-            var product = _context.Products.Where(p => p.ID == id).FirstOrDefault();
-            return product;
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var product = GetByID(id);
+            _context.Remove(product);
+            await _context.SaveChangesAsync();
         }
     }
 }

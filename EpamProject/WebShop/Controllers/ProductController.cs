@@ -1,23 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Data.Interfaces;
 using WebShop.Data.Models;
+using WebShop.ViewModels.Cart;
 using WebShop.ViewModels.Product;
 
 namespace WebShop.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProduct _productService;
         private readonly WebShopContext _context;
+        private readonly IProduct _productService;
+        private readonly ICart _cartService;
 
-        public ProductController(IProduct productService, WebShopContext context)
+        private static UserManager<ShopUser> _userManager;
+
+        public ProductController(WebShopContext context, IProduct productService, ICart cartService, UserManager<ShopUser> userManager)
         {
-            _productService = productService;
             _context = context;
+            _productService = productService;
+            _cartService = cartService;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -37,6 +46,72 @@ namespace WebShop.Controllers
 
             return View(model);
         }
+
+        //[HttpGet]
+        //public IActionResult AddToCart(int id)
+        //{
+        //    //var product = _productService.GetByID(id);
+        //    //var cartItem = new CartItem
+        //    //{
+        //    //    Product = product,
+        //    //    Amount = 1,
+        //    //};
+        //    //return View();
+        //    var product = _productService.GetByID(id);
+        //    IEnumerable<ProductListingModel> selectedProducts = _productService.GetAll().Select(selProduct => new ProductListingModel
+        //    {
+        //        ID = product.ID,
+        //        Name = product.Name,
+        //        ImageURL = product.ImageURL,
+        //        Price = product.Price
+        //    });
+        //    ProductIndexModel model = new ProductIndexModel
+        //    {
+        //        ProductList = selectedProducts
+        //    };
+
+
+        //    return View("Index");
+        //}
+
+
+        [HttpPost, ActionName("AddToCart")]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddToCartPost(int id)
+        {
+
+            var product = _productService.GetByID(id);
+            //var cartItem = new CartItem
+            //{
+            //    Product = product,
+            //    Amount = 1,
+            //};
+            //return View();
+            return View("Index", "Cart");
+        }
+
+        //[HttpPost]
+        //public IActionResult AddToCart()
+        //{
+        //    //var UserID = _userManager.GetUserId(User);
+        //    //var product = _productService.GetByID(id);
+        //    //if(product!= null)
+        //    //{
+        //    //    var ci = new CartItem
+        //    //    {
+
+        //    //    }
+        //    //    var cartItem = new CartListingModel
+        //    //    {
+        //    //        Name = product.Name,
+        //    //        ImageURL = product.ImageURL,
+        //    //        Price = product.Price,
+        //    //        Amount = 1
+        //    //    };
+
+        //    //}
+        //    return View("Index");
+        //}
 
         public IActionResult Details(int id)
         {

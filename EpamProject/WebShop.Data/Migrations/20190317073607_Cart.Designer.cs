@@ -10,8 +10,8 @@ using WebShop.Data.Models;
 namespace WebShop.Data.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    [Migration("20190317035026_Cart2")]
-    partial class Cart2
+    [Migration("20190317073607_Cart")]
+    partial class Cart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -154,9 +154,9 @@ namespace WebShop.Data.Migrations
 
                     b.Property<int>("Amount");
 
-                    b.Property<int?>("CartID");
+                    b.Property<int>("CartID");
 
-                    b.Property<int?>("ProductID");
+                    b.Property<int>("ProductID");
 
                     b.Property<decimal>("Total");
 
@@ -299,11 +299,13 @@ namespace WebShop.Data.Migrations
                 {
                     b.HasOne("WebShop.Data.Models.Cart")
                         .WithMany("CartItems")
-                        .HasForeignKey("CartID");
+                        .HasForeignKey("CartID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebShop.Data.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductID");
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

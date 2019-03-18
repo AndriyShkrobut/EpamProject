@@ -6,11 +6,17 @@ namespace WebShop.Data.Interfaces
 {
     public interface ICart
     {
-        Cart GetByID(int id);
-        IEnumerable<CartItem> GetItems();
+        Cart GetByID(string id);
+        IEnumerable<Cart> GetAll();
 
-        void AddItem(Product product, int amount);
-        Task DeleteItem();
+        //User ID
+        IEnumerable<CartItem> GetItems(string id);
+
+        Cart GetByUserID(string id);
+        Task Add(Cart cart);
+        Task AddCartItem(CartItem cartItem);
+        Task AddItemToCart(string id);
+        Task Delete(string id);
         Task Clear();
         Task GetTotal();
     }

@@ -9,8 +9,6 @@ namespace WebShop.Data.Models
     {
         public int CartItemID { get; set; }
 
-        public int ProductID { get; set; }
-
         public virtual Product Product { get; set; }
 
         public int Amount { get; set; }
@@ -18,5 +16,6 @@ namespace WebShop.Data.Models
         public decimal Total { get; set; }
 
         public int CartID { get; set; }
+        public virtual Cart Cart { get; set; }
     }
 }

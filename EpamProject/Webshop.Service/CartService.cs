@@ -10,54 +10,63 @@ namespace Webshop.Service
     public class CartService : ICart
     {
         private readonly WebShopContext _context;
+        //private readonly 
 
         public CartService(WebShopContext context)
         {
             _context = context;
         }
 
-        public Cart GetByID(int id)
+        public Cart GetByID(string id)
         {
-            var cart = _context.Carts.Where(c => c.CartID == id)
-                .Include(c => c.CartItems).ThenInclude(p => p.Product)
-                .Include(c => c.ShopUser)
+            return _context.Carts.Where(cart => cart.CartID == id)
+                .Include(cart => cart.CartItems)
+                .ThenInclude(cartItem => cartItem.Product)
+                .Include(cart => cart.ShopUser)
                 .FirstOrDefault();
-            return cart;
         }
 
-        public IEnumerable<CartItem> GetItems()
+        public IEnumerable<Cart> GetAll()
         {
-            return _context.CartItems;
+            return _context.Carts
+                .Include(cart => cart.CartItems).ThenInclude(cartItem => cartItem.Product)
+                .Include(cart => cart.ShopUser);
         }
 
-        public void AddItem(Product product, int amount)
+        public IEnumerable<CartItem> GetItems(string id)
         {
-            var cartItem = _context.CartItems.SingleOrDefault(ci => ci.Product.ID == product.ID);
-
-            if (cartItem == null)
-            {
-                cartItem = new CartItem
-                {
-                    Product = product,
-                    Amount = 1,
-                    Total = product.Price
-                };
-
-                _context.CartItems.Add(cartItem);
-            }
-            else
-            {
-                cartItem.Amount++;
-            }
-            _context.SaveChanges();
+            return _context.CartItems.Where(cartItem => cartItem.Cart.ShopUser.Id == id);
         }
 
-        public Task Clear()
+        public Cart GetByUserID(string id)
+        {
+            return _context.Carts.Where(cart => cart.ShopUser.Id == id).SingleOrDefault();
+        }
+
+        public async Task Add(Cart cart)
+        {
+            _context.Add(cart);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddCartItem(CartItem cartItem)
+        {
+            await _context.CartItems.AddAsync(cartItem);
+        }
+
+        public Task AddItemToCart(string id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task DeleteItem()
+        public async Task Delete(string id)
+        {
+            var cart = GetByID(id);
+            _context.Remove(cart);
+            await _context.SaveChangesAsync();
+        }
+
+        public Task Clear()
         {
             throw new System.NotImplementedException();
         }
