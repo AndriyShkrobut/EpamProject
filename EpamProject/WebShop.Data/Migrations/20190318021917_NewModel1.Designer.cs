@@ -10,8 +10,8 @@ using WebShop.Data.Models;
 namespace WebShop.Data.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    [Migration("20190317025555_Cart")]
-    partial class Cart
+    [Migration("20190318021917_NewModel1")]
+    partial class NewModel1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -158,7 +158,8 @@ namespace WebShop.Data.Migrations
 
                     b.Property<int?>("ProductID");
 
-                    b.Property<decimal>("Total");
+                    b.Property<decimal>("Total")
+                        .HasColumnType("money");
 
                     b.HasKey("CartItemID");
 
@@ -213,9 +214,6 @@ namespace WebShop.Data.Migrations
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
-
-                    b.Property<string>("Password")
-                        .HasMaxLength(25);
 
                     b.Property<string>("PasswordHash");
 
@@ -297,7 +295,7 @@ namespace WebShop.Data.Migrations
 
             modelBuilder.Entity("WebShop.Data.Models.CartItem", b =>
                 {
-                    b.HasOne("WebShop.Data.Models.Cart")
+                    b.HasOne("WebShop.Data.Models.Cart", "Cart")
                         .WithMany("CartItems")
                         .HasForeignKey("CartID")
                         .OnDelete(DeleteBehavior.Cascade);

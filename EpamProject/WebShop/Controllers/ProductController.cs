@@ -1,23 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Data.Interfaces;
 using WebShop.Data.Models;
+using WebShop.ViewModels.Cart;
 using WebShop.ViewModels.Product;
 
 namespace WebShop.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProduct _productService;
         private readonly WebShopContext _context;
+        private readonly IProduct _productService;
+        private readonly ICart _cartService;
 
-        public ProductController(IProduct productService, WebShopContext context)
+        private static UserManager<ShopUser> _userManager;
+
+        public ProductController(WebShopContext context, IProduct productService, ICart cartService, UserManager<ShopUser> userManager)
         {
-            _productService = productService;
             _context = context;
+            _productService = productService;
+            _cartService = cartService;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -36,6 +45,16 @@ namespace WebShop.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddToCart(int id)
+        {
+            var product = _productService.GetByID(id);
+            var currentUser = _userManager.GetUserId(User);
+            _cartService.AddItemToCart(product, currentUser);
+            return RedirectToAction("Index", "Cart");
         }
 
         public IActionResult Details(int id)
@@ -70,7 +89,6 @@ namespace WebShop.Controllers
             return View(product);
         }
 
-        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

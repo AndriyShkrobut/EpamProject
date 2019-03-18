@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebShop.Data.Models;
 
 namespace WebShop.Data.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    partial class WebShopContextModelSnapshot : ModelSnapshot
+    [Migration("20190317073607_Cart")]
+    partial class Cart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,10 +156,9 @@ namespace WebShop.Data.Migrations
 
                     b.Property<int>("CartID");
 
-                    b.Property<int?>("ProductID");
+                    b.Property<int>("ProductID");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("money");
+                    b.Property<decimal>("Total");
 
                     b.HasKey("CartItemID");
 
@@ -212,6 +213,9 @@ namespace WebShop.Data.Migrations
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(25);
 
                     b.Property<string>("PasswordHash");
 
@@ -293,14 +297,15 @@ namespace WebShop.Data.Migrations
 
             modelBuilder.Entity("WebShop.Data.Models.CartItem", b =>
                 {
-                    b.HasOne("WebShop.Data.Models.Cart", "Cart")
+                    b.HasOne("WebShop.Data.Models.Cart")
                         .WithMany("CartItems")
                         .HasForeignKey("CartID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebShop.Data.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductID");
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

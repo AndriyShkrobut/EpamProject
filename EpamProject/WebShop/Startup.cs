@@ -28,8 +28,8 @@ namespace WebShop
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-          // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-          options.CheckConsentNeeded = context => true;
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
@@ -50,7 +50,9 @@ namespace WebShop
             .AddEntityFrameworkStores<WebShopContext>();
 
             services.AddScoped<IProduct, ProductService>();
+            services.AddScoped<ICartItem, CartItemService>();
             services.AddScoped<ICart, CartService>();
+            services.AddScoped<IShopUser, ShopUserService>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -71,9 +73,9 @@ namespace WebShop
 
             var supportedCultures = new[]
             {
-        new CultureInfo("en-US"),
-        new CultureInfo("ua-UA"),
-      };
+              new CultureInfo("en-US"),
+              new CultureInfo("ua-UA"),
+            };
 
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
