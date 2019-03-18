@@ -19,6 +19,10 @@ namespace WebShop.Data
       {
         await roleManager.CreateAsync(new IdentityRole("admin"));
       }
+      if (await roleManager.FindByNameAsync("moderator") == null)
+      {
+        await roleManager.CreateAsync(new IdentityRole("moderator"));
+      }
 
       if (await roleManager.FindByNameAsync("user") == null)
       {

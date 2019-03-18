@@ -3,26 +3,26 @@ using Microsoft.AspNetCore.Mvc;
 using WebShop.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using WebShop.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WebShop.Controllers
 {
-    public class AccountController : Controller
-    {
-        private readonly UserManager<ShopUser> _userManager;
-        private readonly SignInManager<ShopUser> _signInManager;
-        private readonly WebShopContext _context;
-        public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager, WebShopContext context)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _context = context;
-        }
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
 
+
+  public class AccountController : Controller
+  {
+    private readonly UserManager<ShopUser> _userManager;
+    private readonly SignInManager<ShopUser> _signInManager;
+    public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager)
+    {
+      _userManager = userManager;
+      _signInManager = signInManager;
+    }
+    [HttpGet]
+    public IActionResult Register()
+    {
+      return View();
+    }
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
