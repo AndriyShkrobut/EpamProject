@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebShop.Data.Interfaces;
 using WebShop.Data.Models;
 using WebShop.ViewModels.Cart;
@@ -33,10 +29,7 @@ namespace WebShop.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            //var currentUser = User;
             var UserID = _userManager.GetUserId(User);
-            //if (User.Identity.IsAuthenticated)
-            //{
             IEnumerable<CartListingModel> cartItems = _cartService.GetByUserID(UserID).CartItems.Select(cartItem => new CartListingModel
             {
                 ID = cartItem.CartItemID,
@@ -53,27 +46,24 @@ namespace WebShop.Controllers
             };
 
             return View(model);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Login", "Account");
-            //}
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RemoveFromCart(int id)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult RemoveFromCart(int id)
         {
             var cartItem = _cartItemService.GetByID(id);
             var UserID = _userManager.GetUserId(User);
-            var itemCount = _cartService.DeleteItemFromCart(cartItem, UserID);
-            //return RedirectToAction("Index");
-            var results = new CartListingModel
-            {
-                Amount = itemCount,
-                ID = id
-            };
-            return Json(results);
+            _cartService.DeleteItemFromCart(cartItem, UserID);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RemoveFromCartAtAll(int id)
+        {
+            var cartItem = _cartItemService.GetByID(id);
+            var UserID = _userManager.GetUserId(User);
+            _cartService.DeleteItemFromCartAtAll(cartItem, UserID);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -83,12 +73,6 @@ namespace WebShop.Controllers
             var UserID = _userManager.GetUserId(User);
             _cartService.Clear(UserID);
             return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public void UpdateTotal(string amount)
-        {
-
         }
     }
 }

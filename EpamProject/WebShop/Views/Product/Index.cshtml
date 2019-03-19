@@ -4,30 +4,69 @@
     ViewData["Title"] = "Catalog";
 }
 
-<h1>Products</h1>
+<h1 style="font-size: 45px; margin-bottom: 50px;">Products</h1>
 
 @if (Model.ProductList.Any())
 {
-    <div class="catalog">
-        @foreach (var product in Model.ProductList)
-        {
-            <form asp-action="AddToCart" asp-route-id="@product.ID" method="post" class="catalog__item">
-                <div class="catalog__item__img__box">
-                    <img src="@product.ImageURL" alt="@product.Name)"
-                         class="catalog__item__img" />
-                </div>
-                <h2><a asp-action="Details" asp-route-id="@product.ID" class="catalog__item__name">@product.Name</a></h2>
-                <h3 class="catalog__item__price">@string.Format("{0:C}", product.Price)</h3>
-                <input type="submit" asp-action="AddToCart" asp-route-id="@product.ID" value="buy" class="catalog__item__tocart btn btn-default">
-                <a asp-action="Delete" asp-route-id="@product.ID">Delete</a>
+    @if (User.IsInRole("admin"))
+    {
+        <a asp-action="Create">Create New</a>
 
-                <input type="hidden" asp-for="@product.ID" name="id" />
-                <input type="hidden" asp-for="@product.Name" name="name" />
-                <input type="hidden" asp-for="@product.ImageURL" name="imageURL" />
-                <input type="hidden" asp-for="@product.Price" name="price" />
-            </form>
-        }
-    </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var product in Model.ProductList)
+            {
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => product.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => product.Price)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@product.ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@product.ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@product.ID">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    }
+    else
+    {
+        <div class="catalog">
+            @foreach (var product in Model.ProductList)
+            {
+                <form asp-action="AddToCart" asp-route-id="@product.ID" method="post">
+                    <a asp-action="Details" asp-route-id="@product.ID" class="catalog_item">
+                        <div class="catalog_item_img_box">
+                            <img src="@product.ImageURL" alt="@product.Name)"
+                                 class="catalog_item_img" />
+                        </div>
+                        <h2 class="catalog_item_title">@product.Name</h2>
+                        <h3 class="catalog_item_price">@string.Format("{0:C}", product.Price)</h3>
+                        <input type="submit" asp-action="AddToCart" asp-route-id="@product.ID" value="buy" class="catalog_item_tocart btn_wide">
+                    </a>
+                    <input type="hidden" asp-for="@product.ID" name="id" />
+                    <input type="hidden" asp-for="@product.Name" name="name" />
+                    <input type="hidden" asp-for="@product.ImageURL" name="imageURL" />
+                    <input type="hidden" asp-for="@product.Price" name="price" />
+                </form>
+            }
+        </div>
+    }
 }
 else
 {

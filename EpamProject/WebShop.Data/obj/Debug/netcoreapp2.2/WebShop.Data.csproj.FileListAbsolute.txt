@@ -9,3 +9,14 @@ D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp
 D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.pdb
 D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.dll
 D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.pdb
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.deps.json
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.runtimeconfig.json
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.runtimeconfig.dev.json
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.dll
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.pdb
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.csprojAssemblyReference.cache
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.AssemblyInfoInputs.cache
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.AssemblyInfo.cs
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.dll
+C:\Users\admin\source\repos\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.pdb

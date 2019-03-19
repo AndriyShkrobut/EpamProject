@@ -126,6 +126,22 @@ namespace Webshop.Service
             return localAmount;
         }
 
+        public int DeleteItemFromCartAtAll(CartItem cartItem, string id)
+        {
+            var cart = GetByUserID(id);
+
+            var shoppingCartItem = _context.CartItems.SingleOrDefault(ci => ci.CartItemID == cartItem.CartItemID && ci.CartID == cart.CartID);
+
+            var localAmount = 0;
+
+            if (shoppingCartItem != null)
+            {
+                _context.CartItems.Remove(shoppingCartItem);
+            }
+            _context.SaveChanges();
+            return localAmount;
+        }
+
         public async Task Delete(int id)
         {
             var cart = GetByID(id);

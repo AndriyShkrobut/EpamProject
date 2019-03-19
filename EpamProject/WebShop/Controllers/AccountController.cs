@@ -10,13 +10,13 @@ namespace WebShop.Controllers
     {
         private readonly UserManager<ShopUser> _userManager;
         private readonly SignInManager<ShopUser> _signInManager;
-        private readonly WebShopContext _context;
-        public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager, WebShopContext context)
+
+        public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _context = context;
         }
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -38,7 +38,7 @@ namespace WebShop.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Product");
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace WebShop.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Product");
                     }
                 }
                 else
@@ -85,12 +85,12 @@ namespace WebShop.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Product");
         }
     }
 }
