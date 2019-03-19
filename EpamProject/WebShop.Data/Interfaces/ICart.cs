@@ -20,6 +20,7 @@ namespace WebShop.Data.Interfaces
 
         int DeleteItemFromCart(CartItem cartItem, string id);
         int DeleteItemFromCartAtAll(CartItem cartItem, string id);
+
         void Clear(string id);
 
         Task Delete(int id);

@@ -5,7 +5,7 @@
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
-@font-face {
+/*@font-face {
   font-family: Ubuntu-Regular;
   src: url('../../fonts/ubuntu/Ubuntu-Regular.ttf'); 
 }
@@ -13,7 +13,7 @@
 @font-face {
     font-family: Ubuntu-Bold;
     src: url('../../fonts/ubuntu/Ubuntu-Bold.ttf');
-}
+}*/
 
 
 
@@ -21,7 +21,7 @@
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
-* {
+/** {
 	margin: 0px; 
 	padding: 0px; 
 	box-sizing: border-box;
@@ -30,10 +30,10 @@
 body, html {
 	height: 100%;
 	font-family: Ubuntu-Regular, sans-serif;
-}
+}*/
 
 /*---------------------------------------------*/
-a {
+/*a {
 	font-family: Ubuntu-Regular;
 	font-size: 14px;
 	line-height: 1.7;
@@ -52,10 +52,10 @@ a:focus {
 a:hover {
 	text-decoration: none;
   color: #fff;
-}
+}*/
 
 /*---------------------------------------------*/
-h1,h2,h3,h4,h5,h6 {
+/*h1,h2,h3,h4,h5,h6 {
 	margin: 0px;
 }
 
@@ -70,11 +70,11 @@ p {
 ul, li {
 	margin: 0px;
 	list-style-type: none;
-}
+}*/
 
 
 /*---------------------------------------------*/
-input {
+/*input {
 	outline: none;
 	border: none;
 }
@@ -111,10 +111,10 @@ textarea:-ms-input-placeholder { color: #555555;}
 label {
   margin: 0;
   display: block;
-}
+}*/
 
 /*---------------------------------------------*/
-button {
+/*button {
 	outline: none !important;
 	border: none;
 	background: transparent;
@@ -126,23 +126,23 @@ button:hover {
 
 iframe {
 	border: none !important;
-}
+}*/
 
 
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
-.txt1 {
+/*.txt1 {
   font-family: Poppins-Regular;
   font-size: 13px;
   color: #e5e5e5;
   line-height: 1.5;
-}
+}*/
 
 
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
 
-.limiter {
+/*.limiter {
   width: 100%;
   margin: 0 auto;
 }
@@ -185,13 +185,13 @@ iframe {
   overflow: hidden;
 
   background: transparent;
-}
+}*/
 
 
 /*------------------------------------------------------------------
 [ Form ]*/
 
-.login100-form {
+/*.login100-form {
   width: 100%;
   border-radius: 10px;
   background-color: #fff;
@@ -224,13 +224,13 @@ iframe {
   text-transform: uppercase;
 
   display: block;
-}
+}*/
 
 
 /*------------------------------------------------------------------
 [ Input ]*/
 
-.wrap-input100 {
+/*.wrap-input100 {
   width: 100%;
   position: relative;
   border-bottom: 1px solid #e6e6e6;
@@ -252,10 +252,10 @@ iframe {
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
   transition: all 0.4s;
-}
+}*/
 
-/*---------------------------------------------*/ 
-.focus-input100 {
+/*---------------------------------------------*/
+/*.focus-input100 {
   position: absolute;
   display: block;
   width: 100%;
@@ -329,12 +329,12 @@ iframe {
 
 .has-val.input100 {
   padding-left: 60px;
-}
+}*/
 
 
 /*------------------------------------------------------------------
 [ Button ]*/
-.container-login100-form-btn {
+/*.container-login100-form-btn {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -403,14 +403,14 @@ iframe {
 
 .login100-form-btn:hover:before {
   opacity: 1;
-}
+}*/
 
 
 
 /*------------------------------------------------------------------
 [ Alert validate ]*/
 
-.validate-input {
+/*.validate-input {
   position: relative;
 }
 
@@ -504,7 +504,7 @@ iframe {
     top: 50%;
     margin-top: -1px;
     z-index: 1;
-}
+}*/
 
 
 

@@ -7,31 +7,47 @@ using WebShop.Data.Models;
 
 namespace WebShop.Data
 {
-  public class DataBaseInitializer
-  {
-    public static void Initialize(WebShopContext context)
+    public class DataBaseInitializer
     {
-      context.Database.EnsureCreated();
+        public static void Initialize(WebShopContext context)
+        {
+            context.Database.EnsureCreated();
 
-      if (context.Products.Any())
-      {
-        return;
-      }
+            if (context.Products.Any())
+            {
+                return;
+            }
 
-      var products = new Product[]
-      {
-        new Product{ Name = "Samsung Galaxy S7", Description = "Powerfull and beautiful smartphone from Samsung", ImageURL = "http://www.stickpng.com/assets/images/58ac4b940aaa10546adf2706.png", Price = 245.99m},
-        new Product{ Name = "Samsung Galaxy S7", Description = "Powerfull and beautiful smartphone from Samsung", ImageURL = "http://www.stickpng.com/assets/images/58ac4b940aaa10546adf2706.png", Price = 245.99m},
-        new Product{ Name = "Samsung Galaxy S7", Description = "Powerfull and beautiful smartphone from Samsung", ImageURL = "http://www.stickpng.com/assets/images/58ac4b940aaa10546adf2706.png", Price = 245.99m},
-        new Product{ Name = "Samsung Galaxy S7", Description = "Powerfull and beautiful smartphone from Samsung", ImageURL = "http://www.stickpng.com/assets/images/58ac4b940aaa10546adf2706.png", Price = 245.99m},
-        new Product{ Name = "Samsung Galaxy S7", Description = "Powerfull and beautiful smartphone from Samsung", ImageURL = "http://www.stickpng.com/assets/images/58ac4b940aaa10546adf2706.png", Price = 245.99m},
-      };
+            var products = new Product[]
+            {
+        new Product{ Name = "Item1", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item2", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item3", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item4", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item5", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item6", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item7", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item8", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item9", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item10", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item11", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item12", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item13", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item14", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item15", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item16", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item17", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item18", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item19", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
+        new Product{ Name = "Item20", Description = "Powerfull and effective product for you business. With help of this item you can achive everything you want. You'll be happy for sure.", ImageURL = "https://i.imgur.com/ydxzeqI.png", Price = 245.55m},
 
-      foreach (Product product in products)
-      {
-        context.Add(product);
-      }
-      context.SaveChanges();
+            };
+
+            foreach (Product product in products)
+            {
+                context.Add(product);
+            }
+            context.SaveChanges();
+        }
     }
-  }
 }

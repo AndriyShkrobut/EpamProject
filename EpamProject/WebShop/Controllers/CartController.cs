@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
 using WebShop.Data.Interfaces;
 using WebShop.Data.Models;
 using WebShop.ViewModels.Cart;
@@ -51,11 +46,6 @@ namespace WebShop.Controllers
             };
 
             return View(model);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Login", "Account");
-            //}
         }
 
         //[HttpPost]

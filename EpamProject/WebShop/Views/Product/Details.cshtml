@@ -4,17 +4,19 @@
     ViewData["Title"] = Model.Name;
 }
 
-<a asp-controller="Product" asp-action="Index">Back to Catalog</a>
-<form asp-action="AddToCart" method="post" class="catalog__item__details">
-    <div class="catalog__item__img__box">
-        <img src="@Model.ImageURL" alt="@Model.Name)"
-             class="catalog__item__img" />
+<a asp-controller="Product" asp-action="Index" class="back_btn btn">
+    <img class="back_btn_img" src="~/img/back_icon.svg" alt="Go Back" />
+</a>
+<div class="details">
+    <div class="details_img_box">
+        <img src="@Model.ImageURL" alt="@Model.Name"
+             class="details_img" />
     </div>
-    <div>
-        <h1 class="catalog__item__name">@Model.Name</h1>
-        <h2 class="catalog__item__description">@Model.Description</h2>
-        <h3 class="catalog__item__price">@string.Format("{0:C}", Model.Price)</h3>
-        <input type="submit" asp-action="AddToCart" asp-route-id="@Model.ID" value="add to cart" class="catalog__item__tocart btn btn-default">
+    <div class="catalog_item details_text">
+        <h2 class="catalog_item_title">@Model.Name</h2>
+        <h3>@Model.Description</h3>
+        <h2 class="catalog_item_price">@string.Format("{0:C}", Model.Price)</h2>
+        <a asp-action="AddToCart" asp-route-id="@Model.ID" @*value="add to cart" *@ class="details_btn btn_wide">add to cart</a>
     </div>
-</form>
+</div>
 

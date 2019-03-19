@@ -6,40 +6,23 @@
     ViewData["Title"] = "Cart";
 }
 
-<h1>Your Cart</h1>
-
+<h1 style="font-size: 45px; margin-bottom: 50px;">
+    Your Cart
+</h1>
 
 @if (Model.CartItemsList.Any())
 {
-    <form method="post">
-        <input type="submit" asp-action="RemoveAllItems" class="btn btn-default" value="Clear">
-    </form>
-    <form method="post">
-        <div class="catalog">
-            @foreach (var cartItem in Model.CartItemsList)
-            {
-                <div id="item-@cartItem.ID" class="catalog__item">
-                    <div class="catalog__item__img__box">
-                        <img src="@cartItem.ImageURL" alt="@cartItem.Name)" class="catalog__item__img" />
-                    </div>
-                    <h2><a asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ProductID" class="catalog__item__name">@cartItem.Name</a></h2>
-                    <h3 class="catalog__item__price">@string.Format("{0:C}", cartItem.Price)</h3>
-
-                    <a asp-action="RemoveFromCart" asp-route-id="@cartItem.ID">-</a>
-                    <h2>@cartItem.Amount</h2>
-                    <a asp-controller="Product" asp-action="AddTocart" asp-route-id="@cartItem.ProductID">+</a>
-
-                    <input type="submit" asp-action="RemoveFromCartAtAll" asp-route-id="@cartItem.ID" class="catalog__item__tocart btn btn-default" value="Remove Item">
-                </div>
-                <input type="hidden" asp-for="@cartItem.ID" name="id" />
-                <input type="hidden" asp-for="@cartItem.Name" name="name" />
-                <input type="hidden" asp-for="@cartItem.ImageURL" name="imageURL" />
-                <input type="hidden" asp-for="@cartItem.Price" name="price" />
-                <input type="hidden" asp-for="@cartItem.ProductID" name="productID" />
-            }
+    <div class="cart_nav">
+        <div>
+            <a asp-controller="Product" asp-action="Index" class="back_btn btn">
+                <img class="back_btn_img" src="~/img/back_icon.svg" alt="Go Back" />
+            </a>
+            <form method="post">
+                <input type="submit" asp-action="RemoveAllItems" id="btn_clear" class="btn" value="Clear">
+            </form>
         </div>
-        Total:
         <h2 id="total">
+            Total:
             @{decimal total = 0; }
             @foreach (var cartItem in Model.CartItemsList)
             {
@@ -47,10 +30,74 @@
             }
             @string.Format("{0:C}", total)
         </h2>
+    </div>
+    <form method="post">
+        <div class="cart_items">
+            @foreach (var cartItem in Model.CartItemsList)
+            {
+                <div class="cart_item">
+                    <div class="cart_item_img_box">
+                        <img src="@cartItem.ImageURL"
+                             alt="@cartItem.Name"
+                             class="cart_item_img" />
+                    </div>
+                    <div class="cart_item_nav">
+                        <h2 class="cart_item_title">Item Name</h2>
+                        <h3 class="cart_item_price">X001</h3>
+                        <div class="cart_item_amount">
+                            <a asp-action="RemoveFromCart" asp-route-id="@cartItem.ID" class="cart_item_amount_count">-</a>
+                            <h2 class="cart_item_amount_number">@cartItem.Amount</h2>
+                            <a asp-controller="Product" asp-action="AddTocart" asp-route-id="@cartItem.ProductID" class="cart_item_amount_count">+</a>
+                        </div>
+                    </div>
+                    <input type="submit" asp-action="RemoveFromCartAtAll" asp-route-id="@cartItem.ID" class="catalog_item_delete" value="">
+                </div>
+            }
+        </div>
+
+
+
+        @*<form method="post">
+                <div class="catalog">
+                    @foreach (var cartItem in Model.CartItemsList)
+                    {
+                        <div class="catalog__item">
+                            <div class="catalog__item__img__box">
+                                <img src="@cartItem.ImageURL" alt="@cartItem.Name" class="catalog__item__img" />
+                            </div>
+                            <h2><a asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ProductID" class="catalog__item__name">@cartItem.Name</a></h2>
+                            <h3 class="catalog__item__price">@string.Format("{0:C}", cartItem.Price)</h3>
+
+                            <a asp-action="RemoveFromCart" asp-route-id="@cartItem.ID">-</a>
+                            <h2>@cartItem.Amount</h2>
+                            <a asp-controller="Product" asp-action="AddTocart" asp-route-id="@cartItem.ProductID">+</a>
+
+                            <input type="submit" asp-action="RemoveFromCartAtAll" asp-route-id="@cartItem.ID" class="catalog__item__tocart btn btn-default" value="Remove Item">
+                        </div>
+                        <input type="hidden" asp-for="@cartItem.ID" name="id" />
+                        <input type="hidden" asp-for="@cartItem.Name" name="name" />
+                        <input type="hidden" asp-for="@cartItem.ImageURL" name="imageURL" />
+                        <input type="hidden" asp-for="@cartItem.Price" name="price" />
+                        <input type="hidden" asp-for="@cartItem.ProductID" name="productID" />
+                    }
+                </div>
+                Total:
+                <h2 id="total">
+                    @{decimal total = 0; }
+                    @foreach (var cartItem in Model.CartItemsList)
+                    {
+                        total += (cartItem.Price * cartItem.Amount);
+                    }
+                    @string.Format("{0:C}", total)
+                </h2>
+            </form>*@
     </form>
 }
 else
 {
-    <h2>No Items</h2>
+    <a asp-controller="Product" asp-action="Index" class="back_btn btn">
+        <img class="back_btn_img" src="~/img/back_icon.svg" alt="Go Back" />
+    </a>
+    <h2 style="text-align:center; vertical-align:middle; font-size: 85px;">No Items</h2>
 }
 

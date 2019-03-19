@@ -3,26 +3,26 @@ using Microsoft.AspNetCore.Mvc;
 using WebShop.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using WebShop.Data.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WebShop.Controllers
 {
-
-
-  public class AccountController : Controller
-  {
-    private readonly UserManager<ShopUser> _userManager;
-    private readonly SignInManager<ShopUser> _signInManager;
-    public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager)
+    public class AccountController : Controller
     {
-      _userManager = userManager;
-      _signInManager = signInManager;
-    }
-    [HttpGet]
-    public IActionResult Register()
-    {
-      return View();
-    }
+        private readonly UserManager<ShopUser> _userManager;
+        private readonly SignInManager<ShopUser> _signInManager;
+
+        public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -38,7 +38,7 @@ namespace WebShop.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Product");
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace WebShop.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Product");
                     }
                 }
                 else
@@ -85,12 +85,12 @@ namespace WebShop.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Product");
         }
     }
 }
