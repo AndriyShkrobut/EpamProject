@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -44,6 +45,25 @@ namespace WebShop.Controllers
             return View(model);
         }
 
+        public IActionResult Search(string searchQuery)
+        {
+            ViewData["CurrentFilter"] = searchQuery;
+            var products = _productService.GetAllFiltered(searchQuery);
+            var productListing = products.Select(product => new ProductListingModel
+            {
+                ID = product.ID,
+                Name = product.Name,
+                ImageURL = product.ImageURL,
+                Price = product.Price
+            });
+
+            var productIndex = new ProductIndexModel
+            {
+                ProductList = productListing
+            };
+            return View("Index", productIndex);
+        }
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         public IActionResult AddToCart(int id)
@@ -86,6 +106,56 @@ namespace WebShop.Controllers
             return View(product);
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,ImageURL,Price")] Product product)
+        {
+            if (id != product.ID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(product);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -94,6 +164,25 @@ namespace WebShop.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,Name,Description,ImageURL,Price")] Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
         }
 
         private bool ProductExists(int id)

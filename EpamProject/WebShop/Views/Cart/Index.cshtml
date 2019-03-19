@@ -42,8 +42,8 @@
                              class="cart_item_img" />
                     </div>
                     <div class="cart_item_nav">
-                        <h2 class="cart_item_title">Item Name</h2>
-                        <h3 class="cart_item_price">@cartItem.Price</h3>
+                        <a style="color: #fff;" asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ID" class="cart_item_title">@cartItem.Name</a>
+                        <h3 class="cart_item_price">@string.Format("{0:C}", cartItem.Price)</h3>
                         <div class="cart_item_amount">
                             <a asp-action="RemoveFromCart" asp-route-id="@cartItem.ID" class="cart_item_amount_count">-</a>
                             <h2 class="cart_item_amount_number">@cartItem.Amount</h2>

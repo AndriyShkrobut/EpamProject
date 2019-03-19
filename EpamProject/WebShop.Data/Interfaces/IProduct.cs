@@ -8,6 +8,7 @@ namespace WebShop.Data.Interfaces
     {
         Product GetByID(int id);
         IEnumerable<Product> GetAll();
+        IEnumerable<Product> GetAllFiltered(string searchQuery);
 
         Task Add(Product product);
         Task Delete(int id);

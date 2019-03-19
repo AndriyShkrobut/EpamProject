@@ -30,6 +30,11 @@ namespace Webshop.Service
             return _context.Products;
         }
 
+        public IEnumerable<Product> GetAllFiltered(string searchQuery)
+        {
+            return GetAll().Where(product => product.Name.Contains(searchQuery) || product.Description.Contains(searchQuery));
+        }
+
 
         public async Task Add(Product product)
         {
