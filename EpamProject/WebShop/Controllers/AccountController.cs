@@ -10,11 +10,13 @@ namespace WebShop.Controllers
     {
         private readonly UserManager<ShopUser> _userManager;
         private readonly SignInManager<ShopUser> _signInManager;
+        private readonly WebShopContext _context;
 
-        public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager)
+        public AccountController(UserManager<ShopUser> userManager, SignInManager<ShopUser> signInManager, WebShopContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -38,6 +40,9 @@ namespace WebShop.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
+                    await _userManager.AddToRoleAsync(user, "user");
+                    _context.Carts.Add(new Cart { ShopUser = user });
+                    _context.SaveChanges();
                     return RedirectToAction("Index", "Product");
                 }
                 else
