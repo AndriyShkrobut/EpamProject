@@ -1,0 +1,11 @@
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.deps.json
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.runtimeconfig.json
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.runtimeconfig.dev.json
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.dll
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\bin\Debug\netcoreapp2.2\WebShop.Data.pdb
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.csprojAssemblyReference.cache
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.csproj.CoreCompileInputs.cache
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.AssemblyInfoInputs.cache
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.AssemblyInfo.cs
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.dll
+D:\Programming\C#\Epam\EpamProject\EpamProject\WebShop.Data\obj\Debug\netcoreapp2.2\WebShop.Data.pdb

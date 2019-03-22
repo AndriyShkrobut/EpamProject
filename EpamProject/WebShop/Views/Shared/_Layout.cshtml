@@ -43,16 +43,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                     </li>
+                    <form method="post" asp-controller="Account" asp-action="LogOff" id="log_off_form">
+                        <input type="submit" value="" id="log_off" class="btn" />
+                    </form>
                 }
                 else if (User.Identity.IsAuthenticated)
                 {
                     <form method="post" asp-controller="Account" asp-action="LogOff" id="log_off_form">
                         <input type="submit" value="" id="log_off" class="btn" />
                     </form>
-                    <a asp-area="" asp-controller="Cart" asp-action="Index" id="cartBtn" class="btn">
-                        <img class="icon" src="~/img/cart_icon.svg" alt="Cart" />
-                        @*<span id="cartLength">4</span>*@
-                    </a>
                 }
                 else
                 {
@@ -60,6 +59,10 @@
                         <img src="~/img/log_in_icon.svg" alt="Alternate Text" />
                     </a>
                 }
+                <a asp-area="" asp-controller="Cart" asp-action="Index" id="cartBtn" class="btn">
+                    <img class="icon" src="~/img/cart_icon.svg" alt="Cart" />
+                    @*<span id="cartLength">4</span>*@
+                </a>
             </nav>
         </div>
     </header>
