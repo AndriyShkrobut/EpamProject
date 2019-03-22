@@ -125,8 +125,6 @@ button {
     background-color: #000;
     color: #FFF;
     display: block;
-    width: 50px;
-    height: 50px;
     padding: 12px;
     -webkit-transition: all 0.2s ease-in;
     transition: all 0.2s ease-in;
@@ -234,6 +232,8 @@ button {
 .search_btn {
     background: url("../img/search_icon.svg") center no-repeat;
     background-size: 26px;
+    width: 50px;
+    height: 50px;
 }
 
 .search_box {
@@ -278,10 +278,14 @@ button {
 #log_in {
     position: absolute;
     right: 70px;
+    width: 50px;
+    height: 50px;
 }
 
 #log_off {
     background: url('../img/log_off_icon1.svg') center no-repeat;
+    width: 50px;
+    height: 50px;
     /*position: absolute;
     right: 70px;*/
 }
@@ -296,6 +300,8 @@ button {
     transition: all 0.1s ease;
     opacity: 1;
     position: relative;
+    width: 50px;
+    height: 50px;
 }
 
 #cartLength {
@@ -426,6 +432,8 @@ button {
     margin-bottom: 25px;
     display: flex;
     justify-content: center;
+    width: 50px;
+    height: 50px;
 }
 
 .back_btn_img {
@@ -459,14 +467,10 @@ button {
     }
 
 .details_img_box {
-    /*width: 50%;*/
     height: 100%;
     display: flex;
     max-width: 50%;
-    /*max-width: 20%;*/
     align-self: center;
-    /*height: 100%;*/
-    /*justify-content: center;*/
 }
 
 .details_img {
@@ -498,8 +502,6 @@ button {
     -moz-box-pack: start;
     -ms-flex-pack: start;
     justify-content: space-between;
-    /*width: 100%;*/
-    /*position: relative;*/
 }
 
     .cart_nav div {
@@ -517,14 +519,6 @@ button {
 }
 
 .cart_items {
-    /*overflow-y: scroll;
-    overflow: -moz-scrollbars-none;
-    -ms-overflow-style: none;
-    margin-right: -11px;
-    background-color: #000;
-    /*max-height: 50vh;
-    margin-bottom: 2vh;
-    background-color: #000;*/
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -590,15 +584,9 @@ button {
     }
 
 .cart_item_img {
-    /*max-width: 100%;
-    height: 100%;
-    -ms-flex-item-align: center;
-    -ms-grid-row-align: center;
-    align-self: center;*/
     height: 100%;
     display: flex;
     overflow: hidden;
-    /*max-width: 20%;*/
     align-self: center;
     height: 100%;
     align-self: center;
@@ -616,11 +604,9 @@ button {
     justify-content: center;
     overflow: hidden;
     height: 100%;
-    /*width: 50%;*/
     max-height: 100%;
     display: flex;
     max-width: 50%;
-    /*max-width: 20%;*/
     align-self: center;
 }
 
@@ -664,7 +650,6 @@ button {
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
     text-shadow: 0px 0px 10px rgba(255, 255, 255, 0);
-    /*margin: 0 10px;*/
 }
 
     .cart_item_amount_count:hover {
@@ -676,10 +661,47 @@ button {
     color: #000;
     text-align: center;
     font-size: 30px;
-    /*width: 12%;*/
     margin: 0 10px;
     padding: 10px 15px;
     font-size: 30px;
+}
+
+::placeholder {
+    color: #FFF;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    .input div:not(:last-child) {
+        margin: 10px 0;
+    }
+
+input {
+    padding: 0.5%;
+    width: 35%;
+    border: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: Raleway, sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    resize: none;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+.login input:focus, .input div > input:hover, .input div > input:hover {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.9);
+}
+
+#login_sign_in {
+}
+
+#sign_in_btn {
+    margin: 0 auto;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1199.9px) {
