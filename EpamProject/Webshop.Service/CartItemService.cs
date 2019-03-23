@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WebShop.Data.Interfaces;
 using WebShop.Data.Models;
@@ -34,13 +32,12 @@ namespace Webshop.Service
         public IEnumerable<CartItem> GetAll()
         {
             return _context.CartItems
-                .Include(cartItem => cartItem.Cart)
                 .Include(cartItem => cartItem.Product);
         }
 
         public CartItem GetByID(int id)
         {
-            return _context.CartItems.Where(cartItem => cartItem.CartItemID == id).SingleOrDefault();
+            return _context.CartItems.Where(cartItem => cartItem.CartItemId == id).SingleOrDefault();
         }
     }
 }

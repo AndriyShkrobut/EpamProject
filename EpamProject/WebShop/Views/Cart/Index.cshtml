@@ -1,85 +1,99 @@
 ﻿@model WebShop.ViewModels.Cart.CartIndexModel
+@*@Html.AntiForgeryToken()*@
+@{decimal Total()
+    {
+        decimal total = 0;
+        foreach (var cartItem in Model.CartItemsList)
+        {
+            total += (cartItem.Price * cartItem.Amount);
+        }
+        return total;
+    }
+}
 
 
 @{
     ViewData["Title"] = "Cart";
 }
 
-<h1>Your Cart</h1>
-
+<h1 style="font-size: 45px; margin-bottom: 50px;">
+    Your Cart
+</h1>
 
 @if (Model.CartItemsList.Any())
 {
+    <div class="cart_nav">
+        <div>
+            <a asp-controller="Product" asp-action="Index" class="back_btn btn">
+                <img class="back_btn_img" src="~/img/back_icon.svg" alt="Go Back" />
+            </a>
+            <form method="post">
+                <input type="submit" asp-action="RemoveAllItems" id="btn_clear" class="btn" value="Clear">
+            </form>
+        </div>
+        <h2 id="total">
+            Total:
+            <span id="total_number">
+                @string.Format("{0:C}", Total())
+            </span>
+        </h2>
+    </div>
     <form method="post">
-        <input type="submit" asp-action="RemoveAllItems" class="btn btn-default" value="Clear">
-    </form>
-    <form method="post">
-        <div class="catalog">
+        <div class="cart_items">
             @foreach (var cartItem in Model.CartItemsList)
             {
-                <div class="catalog__item">
-                    <div class="catalog__item__img__box">
-                        <img src="@cartItem.ImageURL" alt="@cartItem.Name)" class="catalog__item__img" />
+                <div class="cart_item">
+                    <div class="cart_item_img_box">
+                        <img src="@cartItem.ImageURL"
+                             alt="@cartItem.Name"
+                             class="cart_item_img" />
                     </div>
-                    <h2><a asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ProductID" class="catalog__item__name">@cartItem.Name</a></h2>
-                    <h3 class="catalog__item__price">@string.Format("{0:C}", cartItem.Price)</h3>
-                    <button data-id="@cartItem.ID" id="minus">-</button><input type="text" id="amount-@cartItem.ID" value="@cartItem.Amount">
-                    <input type="submit" asp-action="RemoveFromCart" asp-route-id="@cartItem.ID" class="catalog__item__tocart btn btn-default" value="Remove Item">
+                    <div class="cart_item_nav">
+                        <a style="color: #fff;" asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ProductId" class="cart_item_title">@cartItem.Name</a>
+                        <h3 class="cart_item_price">@string.Format("{0:C}", cartItem.Price)</h3>
+                        <div class="cart_item_amount">
+                            <a id="minus" class="cart_item_amount_count">-</a>
+                            <h2 class="cart_item_amount_number">@cartItem.Amount</h2>
+                            <a id="plus" data-id="@cartItem.ProductId" class="cart_item_amount_count">+</a>
+                        </div>
+                    </div>
+                    <input type="submit" asp-action="RemoveFromCartAtAll" asp-route-id="@cartItem.CartItemId" class="catalog_item_delete" value="">
                 </div>
-                @*<input type="submit" name="removeItem" value="-" />*@
-                <input type="hidden" asp-for="@cartItem.ID" name="id" />
-                <input type="hidden" asp-for="@cartItem.Name" name="name" />
-                <input type="hidden" asp-for="@cartItem.ImageURL" name="imageURL" />
-                <input type="hidden" asp-for="@cartItem.Price" name="price" />
             }
         </div>
-        Total:
-        <h2 id="total">
-            @{decimal total = 0; }
-            @foreach (var cartItem in Model.CartItemsList)
-            {
-                total += (cartItem.Price * cartItem.Amount);
-            }
-            @string.Format("{0:C}", total)
-        </h2>
     </form>
 }
 else
 {
-    <h2>No Items</h2>
+    <a asp-controller="Product" asp-action="Index" class="back_btn btn">
+        <img class="back_btn_img" src="~/img/back_icon.svg" alt="Go Back" />
+    </a>
+    <h2 style="text-align:center; vertical-align:middle; font-size: 85px;">No Items</h2>
 }
-<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript">
-    //$("amount").change(function () {
-    //    $.ajax({
-    //        method: 'POST',
-    //        url: '/Cart/UpdateTotal',
-    //        data: { amount: $("#drop2").val(), id:  }, // Pass value that you want to controller.
-    //        success: function (data) {
-    //            $("#total").val(data); //Implement partial refreshing.
-    //        }
-    //    })
-    //})
-
-    $("#minus").click(function (e) {
-        // Get the id from the link
-        var recordToDelete = $(this).attr("data-id");
-        e.preventDefault();
-        if (recordToDelete != '') {
-            // Perform the ajax post
-            $.ajax({
-                method: 'POST',
-                url: 'Cart/RemoveFromCart',
-                data: { id: recordToDelete },
-                success: function (data) {
-                    if (data.ItemCount == 0) {
-                        $('#row-' + data.DeleteId).fadeOut('slow');
-                    } else {
-                        $('#amount-' + data.ID).text(data.Amount);
+@*asp-action="AddTocart" asp-route-id="@cartItem.ProductID" *@
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function addItem(button) {
+            button.onclick = function (e) {
+                e.preventDefault();
+                let itemToDelete = button.dataset.id;
+                let total = document.getElementById('total_number');
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', `/Cart/AddToCart/${itemToDelete}`, true);
+                xhr.onload = function () {
+                    if (this.status == 200) {
+                        button.previousElementSibling.innerHTML = parseInt(button.previousElementSibling.innerHTML) + 1;
+                        alert(total.closest('.cart_item_price').innerHTML);
                     }
                 }
-            })
+                xhr.send();
+            }
         }
+
+        let plusButtons = document.querySelectorAll('#plus');
+        plusButtons.forEach(addItem);
+
+
     });
 </script>
 

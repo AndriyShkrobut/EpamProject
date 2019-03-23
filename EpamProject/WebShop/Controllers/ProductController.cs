@@ -2,13 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Data.Interfaces;
 using WebShop.Data.Models;
-using WebShop.ViewModels.Cart;
 using WebShop.ViewModels.Product;
 
 namespace WebShop.Controllers
@@ -33,7 +31,7 @@ namespace WebShop.Controllers
         {
             IEnumerable<ProductListingModel> products = _productService.GetAll().Select(product => new ProductListingModel
             {
-                ID = product.ID,
+                Id = product.Id,
                 Name = product.Name,
                 ImageURL = product.ImageURL,
                 Price = product.Price
@@ -47,14 +45,23 @@ namespace WebShop.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AddToCart(int id)
+        public IActionResult Search(string searchQuery)
         {
-            var product = _productService.GetByID(id);
-            var currentUser = _userManager.GetUserId(User);
-            _cartService.AddItemToCart(product, currentUser);
-            return RedirectToAction("Index", "Cart");
+            ViewData["CurrentFilter"] = searchQuery;
+            var products = _productService.GetAllFiltered(searchQuery);
+            var productListing = products.Select(product => new ProductListingModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                ImageURL = product.ImageURL,
+                Price = product.Price
+            });
+
+            var productIndex = new ProductIndexModel
+            {
+                ProductList = productListing
+            };
+            return View("Index", productIndex);
         }
 
         public IActionResult Details(int id)
@@ -63,7 +70,7 @@ namespace WebShop.Controllers
 
             var model = new ProductDetailModel
             {
-                ID = product.ID,
+                Id = product.Id,
                 Name = product.Name,
                 ImageURL = product.ImageURL,
                 Price = product.Price,
@@ -80,12 +87,62 @@ namespace WebShop.Controllers
             }
 
             var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
             }
 
+            return View(product);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,ImageURL,Price")] Product product)
+        {
+            if (id != product.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(product);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
             return View(product);
         }
 
@@ -99,9 +156,28 @@ namespace WebShop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,Name,Description,ImageURL,Price")] Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
+
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.ID == id);
+            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

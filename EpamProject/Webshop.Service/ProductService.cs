@@ -21,13 +21,18 @@ namespace Webshop.Service
 
         public Product GetByID(int id)
         {
-            var product = _context.Products.Where(p => p.ID == id).FirstOrDefault();
+            var product = _context.Products.Where(p => p.Id == id).FirstOrDefault();
             return product;
         }
 
         public IEnumerable<Product> GetAll()
         {
             return _context.Products;
+        }
+
+        public IEnumerable<Product> GetAllFiltered(string searchQuery)
+        {
+            return GetAll().Where(product => product.Name.Contains(searchQuery) || product.Description.Contains(searchQuery));
         }
 
 

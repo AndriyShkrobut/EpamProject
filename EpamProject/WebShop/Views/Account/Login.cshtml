@@ -1,24 +1,29 @@
 ﻿@model WebShop.ViewModels.LoginViewModel
 
-<h2> Log in to the application </h2>
-<form method="post" asp-conroller="Account" asp-action="Login"
-      asp-route-returnUrl="@Model.ReturnUrl">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label asp-for="UserName"></label><br />
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName"></span>
+@{
+    ViewData["Title"] = "sign in";
+}
+
+<h1 style="font-size: 45px; margin-bottom: 50px;">Login</h1>
+<div class="login">
+    <form id="login_sign_in" class="" method="post" autocomplete="off" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <div class="" data-validate="Enter username">
+            <input class="" placeholder="User Name" asp-for="UserName">
+            <span class="" data-pl-validation-for="UserName"></span>
+        </div>
+
+        <div class="" data-validate="Enter password">
+            <input class="" placeholder="Password" asp-for="Password">
+            <span class="" data-placeholder="&#xe80f;" asp-validation-for="Password"></span>
+        </div>
+        <button id="sign_in_btn" class="btn">
+            Sign in
+        </button>
+    </form>
+    <div class="login_register">
+        <h5>Don't you have an account?</h5>
+        <a class="" asp-action="Register" asp-controller="Account">Create an account</a>
     </div>
-    <div>
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div>
-        <label asp-for="RememberMe"></label><br />
-        <input asp-for="RememberMe" />
-    </div>
-    <div>
-        <input type="submit" value="Sign in"/>
-    </div>
-</form>
+</div>
