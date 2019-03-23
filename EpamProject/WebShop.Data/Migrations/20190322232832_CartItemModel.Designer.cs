@@ -10,8 +10,8 @@ using WebShop.Data.Models;
 namespace WebShop.Data.Migrations
 {
     [DbContext(typeof(WebShopContext))]
-    [Migration("20190317230053_NewModel")]
-    partial class NewModel
+    [Migration("20190322232832_CartItemModel")]
+    partial class CartItemModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -133,13 +133,13 @@ namespace WebShop.Data.Migrations
 
             modelBuilder.Entity("WebShop.Data.Models.Cart", b =>
                 {
-                    b.Property<int>("CartID")
+                    b.Property<int>("CartId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ShopUserId");
 
-                    b.HasKey("CartID");
+                    b.HasKey("CartId");
 
                     b.HasIndex("ShopUserId");
 
@@ -148,30 +148,28 @@ namespace WebShop.Data.Migrations
 
             modelBuilder.Entity("WebShop.Data.Models.CartItem", b =>
                 {
-                    b.Property<int>("CartItemID")
+                    b.Property<int>("CartItemId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Amount");
 
-                    b.Property<int>("CartID");
+                    b.Property<int?>("CartId");
 
-                    b.Property<int?>("ProductID");
+                    b.Property<int?>("ProductId");
 
-                    b.Property<decimal>("Total");
+                    b.HasKey("CartItemId");
 
-                    b.HasKey("CartItemID");
+                    b.HasIndex("CartId");
 
-                    b.HasIndex("CartID");
-
-                    b.HasIndex("ProductID");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("WebShop.Data.Models.Product", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -184,7 +182,7 @@ namespace WebShop.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Products");
                 });
@@ -296,12 +294,11 @@ namespace WebShop.Data.Migrations
                 {
                     b.HasOne("WebShop.Data.Models.Cart", "Cart")
                         .WithMany("CartItems")
-                        .HasForeignKey("CartID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CartId");
 
                     b.HasOne("WebShop.Data.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductID");
+                        .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618
         }

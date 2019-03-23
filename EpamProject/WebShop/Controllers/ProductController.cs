@@ -31,7 +31,7 @@ namespace WebShop.Controllers
         {
             IEnumerable<ProductListingModel> products = _productService.GetAll().Select(product => new ProductListingModel
             {
-                ID = product.ID,
+                Id = product.Id,
                 Name = product.Name,
                 ImageURL = product.ImageURL,
                 Price = product.Price
@@ -51,7 +51,7 @@ namespace WebShop.Controllers
             var products = _productService.GetAllFiltered(searchQuery);
             var productListing = products.Select(product => new ProductListingModel
             {
-                ID = product.ID,
+                Id = product.Id,
                 Name = product.Name,
                 ImageURL = product.ImageURL,
                 Price = product.Price
@@ -64,23 +64,13 @@ namespace WebShop.Controllers
             return View("Index", productIndex);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult AddToCart(int id)
-        {
-            var product = _productService.GetByID(id);
-            var currentUser = _userManager.GetUserId(User);
-            _cartService.AddItemToCart(product, currentUser);
-            return RedirectToAction("Index", "Cart");
-        }
-
         public IActionResult Details(int id)
         {
             var product = _productService.GetByID(id);
 
             var model = new ProductDetailModel
             {
-                ID = product.ID,
+                Id = product.Id,
                 Name = product.Name,
                 ImageURL = product.ImageURL,
                 Price = product.Price,
@@ -97,7 +87,7 @@ namespace WebShop.Controllers
             }
 
             var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
@@ -128,7 +118,7 @@ namespace WebShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,ImageURL,Price")] Product product)
         {
-            if (id != product.ID)
+            if (id != product.Id)
             {
                 return NotFound();
             }
@@ -142,7 +132,7 @@ namespace WebShop.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.ID))
+                    if (!ProductExists(product.Id))
                     {
                         return NotFound();
                     }
@@ -187,7 +177,7 @@ namespace WebShop.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.ID == id);
+            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

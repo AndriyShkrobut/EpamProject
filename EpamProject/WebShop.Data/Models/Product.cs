@@ -5,9 +5,8 @@ namespace WebShop.Data.Models
 {
     public class Product
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
-        [Display(Name = "Product Name")]
         public string Name { get; set; }
 
         public string Description { get; set; }

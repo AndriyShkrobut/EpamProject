@@ -1,5 +1,5 @@
 ﻿@model WebShop.ViewModels.Cart.CartIndexModel
-@Html.AntiForgeryToken()
+@*@Html.AntiForgeryToken()*@
 
 
 @{
@@ -42,55 +42,18 @@
                              class="cart_item_img" />
                     </div>
                     <div class="cart_item_nav">
-                        <a style="color: #fff;" asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ID" class="cart_item_title">@cartItem.Name</a>
+                        <a style="color: #fff;" asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ProductId" class="cart_item_title">@cartItem.Name</a>
                         <h3 class="cart_item_price">@string.Format("{0:C}", cartItem.Price)</h3>
                         <div class="cart_item_amount">
-                            <a asp-action="RemoveFromCart" asp-route-id="@cartItem.ID" class="cart_item_amount_count">-</a>
-                            <h2 class="cart_item_amount_number">@cartItem.Amount</h2>
-                            <a asp-controller="Product" asp-action="AddTocart" asp-route-id="@cartItem.ProductID" class="cart_item_amount_count">+</a>
+                            <a id="minus" class="cart_item_amount_count">-</a>
+                            <h2 class="cart_item_amount_number" data-id="@cartItem.ProductId">@cartItem.Amount</h2>
+                            <a id="plus" data-id="@cartItem.ProductId" class="cart_item_amount_count">+</a>
                         </div>
                     </div>
-                    <input type="submit" asp-action="RemoveFromCartAtAll" asp-route-id="@cartItem.ID" class="catalog_item_delete" value="">
+                    <input type="submit" asp-action="RemoveFromCartAtAll" asp-route-id="@cartItem.CartItemId" class="catalog_item_delete" value="">
                 </div>
             }
         </div>
-
-
-
-        @*<form method="post">
-                <div class="catalog">
-                    @foreach (var cartItem in Model.CartItemsList)
-                    {
-                        <div class="catalog__item">
-                            <div class="catalog__item__img__box">
-                                <img src="@cartItem.ImageURL" alt="@cartItem.Name" class="catalog__item__img" />
-                            </div>
-                            <h2><a asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ProductID" class="catalog__item__name">@cartItem.Name</a></h2>
-                            <h3 class="catalog__item__price">@string.Format("{0:C}", cartItem.Price)</h3>
-
-                            <a asp-action="RemoveFromCart" asp-route-id="@cartItem.ID">-</a>
-                            <h2>@cartItem.Amount</h2>
-                            <a asp-controller="Product" asp-action="AddTocart" asp-route-id="@cartItem.ProductID">+</a>
-
-                            <input type="submit" asp-action="RemoveFromCartAtAll" asp-route-id="@cartItem.ID" class="catalog__item__tocart btn btn-default" value="Remove Item">
-                        </div>
-                        <input type="hidden" asp-for="@cartItem.ID" name="id" />
-                        <input type="hidden" asp-for="@cartItem.Name" name="name" />
-                        <input type="hidden" asp-for="@cartItem.ImageURL" name="imageURL" />
-                        <input type="hidden" asp-for="@cartItem.Price" name="price" />
-                        <input type="hidden" asp-for="@cartItem.ProductID" name="productID" />
-                    }
-                </div>
-                Total:
-                <h2 id="total">
-                    @{decimal total = 0; }
-                    @foreach (var cartItem in Model.CartItemsList)
-                    {
-                        total += (cartItem.Price * cartItem.Amount);
-                    }
-                    @string.Format("{0:C}", total)
-                </h2>
-            </form>*@
     </form>
 }
 else
@@ -100,4 +63,29 @@ else
     </a>
     <h2 style="text-align:center; vertical-align:middle; font-size: 85px;">No Items</h2>
 }
+@*asp-action="AddTocart" asp-route-id="@cartItem.ProductID" *@
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function addItem(button) {
+            button.onclick = function (e) {
+                e.preventDefault();
+                alert('Added Item');
+                let itemToDelete = button.dataset.id;
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', `/Cart/AddToCart/${itemToDelete}`, true);
+                xhr.onload = function () {
+                    if (this.status == 200) {
+                        console.log('Added Item');
+                    }
+                }
+                xhr.send();
+            }
+        }
+
+        let plusButtons = document.querySelectorAll('#plus');
+        plusButtons.forEach(addItem);
+
+
+    });
+</script>
 

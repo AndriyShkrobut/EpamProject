@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebShop.Data.Migrations
 {
-    public partial class ProductCartModels : Migration
+    public partial class CartItemModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,6 +29,7 @@ namespace WebShop.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
@@ -39,10 +40,7 @@ namespace WebShop.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FullName = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +51,7 @@ namespace WebShop.Data.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
@@ -62,7 +60,7 @@ namespace WebShop.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.ID);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,13 +173,13 @@ namespace WebShop.Data.Migrations
                 name: "Carts",
                 columns: table => new
                 {
-                    CartID = table.Column<int>(nullable: false)
+                    CartId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ShopUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carts", x => x.CartID);
+                    table.PrimaryKey("PK_Carts", x => x.CartId);
                     table.ForeignKey(
                         name: "FK_Carts_AspNetUsers_ShopUserId",
                         column: x => x.ShopUserId,
@@ -194,28 +192,27 @@ namespace WebShop.Data.Migrations
                 name: "CartItems",
                 columns: table => new
                 {
-                    CartItemID = table.Column<int>(nullable: false)
+                    CartItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ProductID = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: true),
                     Amount = table.Column<int>(nullable: false),
-                    Total = table.Column<decimal>(nullable: false),
-                    CartID = table.Column<int>(nullable: true)
+                    CartId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartItems", x => x.CartItemID);
+                    table.PrimaryKey("PK_CartItems", x => x.CartItemId);
                     table.ForeignKey(
-                        name: "FK_CartItems_Carts_CartID",
-                        column: x => x.CartID,
+                        name: "FK_CartItems_Carts_CartId",
+                        column: x => x.CartId,
                         principalTable: "Carts",
-                        principalColumn: "CartID",
+                        principalColumn: "CartId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CartItems_Products_ProductID",
-                        column: x => x.ProductID,
+                        name: "FK_CartItems_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -258,15 +255,14 @@ namespace WebShop.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_CartID",
+                name: "IX_CartItems_CartId",
                 table: "CartItems",
-                column: "CartID");
+                column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_ProductID",
+                name: "IX_CartItems_ProductId",
                 table: "CartItems",
-                column: "ProductID",
-                unique: true);
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_ShopUserId",

@@ -25,7 +25,7 @@ namespace Webshop.Service
 
         public Cart GetByID(int id)
         {
-            return _context.Carts.Where(cart => cart.CartID == id)
+            return _context.Carts.Where(cart => cart.CartId == id)
                 .Include(cart => cart.CartItems)
                 .ThenInclude(cartItem => cartItem.Product)
                 .Include(cart => cart.ShopUser)
@@ -80,16 +80,15 @@ namespace Webshop.Service
             }
             cart = GetByUserID(id);
 
-            var shoppingCartItem = _context.CartItems.SingleOrDefault(ci => ci.Product.ID == product.ID && ci.CartID == cart.CartID);
+            var shoppingCartItem = _context.CartItems.SingleOrDefault(ci => ci.Product.Id == product.Id && ci.Cart.CartId == cart.CartId);
 
             if (shoppingCartItem == null)
             {
                 shoppingCartItem = new CartItem
                 {
-                    CartID = cart.CartID,
                     Product = product,
                     Amount = 1,
-                    Total = product.Price
+                    Cart = cart
                 };
 
                 await AddCartItem(shoppingCartItem);
@@ -97,7 +96,6 @@ namespace Webshop.Service
             else
             {
                 shoppingCartItem.Amount++;
-                shoppingCartItem.Total = shoppingCartItem.Amount * shoppingCartItem.Product.Price;
             }
             _context.SaveChanges();
         }
@@ -106,7 +104,7 @@ namespace Webshop.Service
         {
             var cart = GetByUserID(id);
 
-            var shoppingCartItem = _context.CartItems.SingleOrDefault(ci => ci.CartItemID == cartItem.CartItemID && ci.CartID == cart.CartID);
+            var shoppingCartItem = _context.CartItems.SingleOrDefault(ci => ci.CartItemId == cartItem.CartItemId && ci.Cart.CartId == cart.CartId);
 
             var localAmount = 0;
 
@@ -130,7 +128,7 @@ namespace Webshop.Service
         {
             var cart = GetByUserID(id);
 
-            var shoppingCartItem = _context.CartItems.SingleOrDefault(ci => ci.CartItemID == cartItem.CartItemID && ci.CartID == cart.CartID);
+            var shoppingCartItem = _context.CartItems.SingleOrDefault(ci => ci.CartItemId == cartItem.CartItemId && ci.Cart.CartId == cart.CartId);
 
             var localAmount = 0;
 

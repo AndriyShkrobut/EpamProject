@@ -32,12 +32,12 @@ namespace WebShop.Controllers
             var UserID = _userManager.GetUserId(User);
             IEnumerable<CartListingModel> cartItems = _cartService.GetByUserID(UserID).CartItems.Select(cartItem => new CartListingModel
             {
-                ID = cartItem.CartItemID,
+                CartItemId = cartItem.CartItemId,
+                ProductId = cartItem.Product.Id,
                 Name = cartItem.Product.Name,
                 ImageURL = cartItem.Product.ImageURL,
                 Price = cartItem.Product.Price,
                 Amount = cartItem.Amount,
-                ProductID = cartItem.Product.ID
             });
 
             CartIndexModel model = new CartIndexModel
@@ -48,7 +48,17 @@ namespace WebShop.Controllers
             return View(model);
         }
 
-        //[HttpPost]
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult AddToCart(int id)
+        {
+            var product = _productService.GetByID(id);
+            var currentUser = _userManager.GetUserId(User);
+            _cartService.AddItemToCart(product, currentUser);
+            return RedirectToAction("Index", "Cart");
+        }
+
+        [HttpPost]
         //[ValidateAntiForgeryToken]
         public IActionResult RemoveFromCart(int id)
         {

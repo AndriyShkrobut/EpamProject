@@ -21,7 +21,7 @@ namespace Webshop.Service
 
         public Product GetByID(int id)
         {
-            var product = _context.Products.Where(p => p.ID == id).FirstOrDefault();
+            var product = _context.Products.Where(p => p.Id == id).FirstOrDefault();
             return product;
         }
 

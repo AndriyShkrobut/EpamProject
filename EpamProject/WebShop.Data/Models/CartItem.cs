@@ -5,17 +5,11 @@ namespace WebShop.Data.Models
 {
     public class CartItem
     {
-        public int CartItemID { get; set; }
+        public int CartItemId { get; set; }
 
         public virtual Product Product { get; set; }
 
         public int Amount { get; set; }
-
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "money")]
-        public decimal Total { get; set; }
-
-        public int CartID { get; set; }
 
         public virtual Cart Cart { get; set; }
     }
