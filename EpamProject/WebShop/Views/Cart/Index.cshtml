@@ -1,7 +1,7 @@
 ﻿@model WebShop.ViewModels.Cart.CartIndexModel
 
 @{
-    ViewData["Title"] = "Cart";
+    ViewData["Title"] = "cart";
 }
 
 <h1 style="font-size: 45px; margin-bottom: 50px;">
@@ -16,7 +16,7 @@
                 <img class="back_btn_img" src="~/img/back_icon.svg" alt="Go Back" />
             </a>
             <form id="clear" method="post">
-                <input type="submit" @*asp-action="RemoveAllItems" *@ id="btn_clear" class="btn" value="Clear">
+                <input type="submit" id="btn_clear" class="btn" value="Clear">
             </form>
         </div>
         <h2 id="total">
@@ -72,7 +72,7 @@ else
         let plusButtons = document.querySelectorAll('#plus');
         let minusButtons = document.querySelectorAll('#minus');
         let deleteButton = document.querySelectorAll('.cart_item_delete');
-        let clearButton = document.querySelector('#btn_clear');
+        let clearButton = document.getElementById('btn_clear');
 
 
         const formatter = new Intl.NumberFormat('en-US', {
@@ -203,7 +203,7 @@ else
 
                 let xhr = new XMLHttpRequest();
 
-                xhr.open('POST', '/Cart/RemoveAllItems', true);
+                xhr.open('POST', '/Cart/RemoveAllItems/', true);
                 xhr.onload = function () {
                     if (this.status == 200 && cartItems.children.length > 0) {
                         total.style.opacity = 0;
@@ -233,7 +233,7 @@ else
         plusButtons.forEach(addItem);
         minusButtons.forEach(removeItem);
         deleteButton.forEach(removeItemFromCart);
-
+        removeAll(clearButton);
     });
 </script>
 
