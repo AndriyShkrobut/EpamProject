@@ -42,7 +42,8 @@ namespace WebShop.Controllers
 
             CartIndexModel model = new CartIndexModel
             {
-                CartItemsList = cartItems
+                CartItemsList = cartItems,
+                Total = _cartService.GetTotal(UserID)
             };
 
             return View(model);
@@ -53,9 +54,9 @@ namespace WebShop.Controllers
         public IActionResult AddToCart(int id)
         {
             var product = _productService.GetByID(id);
-            var currentUser = _userManager.GetUserId(User);
-            _cartService.AddItemToCart(product, currentUser);
-            return RedirectToAction("Index", "Cart");
+            var userId = _userManager.GetUserId(User);
+            _cartService.AddItemToCart(product, userId);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -68,6 +69,7 @@ namespace WebShop.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         public IActionResult RemoveFromCartAtAll(int id)
         {
             var cartItem = _cartItemService.GetByID(id);
@@ -83,6 +85,12 @@ namespace WebShop.Controllers
             var UserID = _userManager.GetUserId(User);
             _cartService.Clear(UserID);
             return RedirectToAction("Index");
+        }
+
+        public decimal Total()
+        {
+            var userId = _userManager.GetUserId(User);
+            return _cartService.GetTotal(userId);
         }
     }
 }

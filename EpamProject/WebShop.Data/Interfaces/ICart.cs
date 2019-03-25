@@ -22,6 +22,7 @@ namespace WebShop.Data.Interfaces
         int DeleteItemFromCartAtAll(CartItem cartItem, string id);
 
         void Clear(string id);
+        decimal GetTotal(string id);
 
         Task Delete(int id);
     }

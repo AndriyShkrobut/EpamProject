@@ -27,7 +27,7 @@ namespace WebShop
                     DataBaseInitializer.Initialize(context);
                     var userManager = services.GetRequiredService<UserManager<ShopUser>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    Task t = RoleInitializer.InitializeAsync(userManager, rolesManager);
+                    Task t = RoleInitializer.InitializeAsync(userManager, rolesManager, context);
                     t.Wait();
                 }
                 catch (Exception exception)

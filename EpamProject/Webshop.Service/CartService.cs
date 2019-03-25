@@ -154,9 +154,15 @@ namespace Webshop.Service
             _context.SaveChanges();
         }
 
-        public Task GetTotal()
+        public decimal GetTotal(string id)
         {
-            throw new System.NotImplementedException();
+            var cart = GetByUserID(id);
+            decimal total = 0.0M;
+            foreach (var cartItem in cart.CartItems)
+            {
+                total += cartItem.Product.Price * cartItem.Amount;
+            }
+            return total;
         }
     }
 }
