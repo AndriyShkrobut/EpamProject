@@ -79,7 +79,7 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult RemoveAllItems()
         {
             var UserID = _userManager.GetUserId(User);

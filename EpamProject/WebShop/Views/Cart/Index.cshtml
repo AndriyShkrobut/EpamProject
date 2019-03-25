@@ -1,7 +1,7 @@
 ﻿@model WebShop.ViewModels.Cart.CartIndexModel
 
 @{
-    ViewData["Title"] = "Cart";
+    ViewData["Title"] = "cart";
 }
 
 <h1 style="font-size: 45px; margin-bottom: 50px;">
@@ -16,7 +16,7 @@
                 <img class="back_btn_img" src="~/img/back_icon.svg" alt="Go Back" />
             </a>
             <form id="clear" method="post">
-                <input type="submit" asp-action="RemoveAllItems" id="btn_clear" class="btn" value="Clear">
+                <input type="submit" id="btn_clear" class="btn" value="Clear">
             </form>
         </div>
         <h2 id="total">
@@ -71,7 +71,8 @@ else
 
         let plusButtons = document.querySelectorAll('#plus');
         let minusButtons = document.querySelectorAll('#minus');
-        let deleteButton = document.querySelectorAll('.cart_item_delete')
+        let deleteButton = document.querySelectorAll('.cart_item_delete');
+        let clearButton = document.getElementById('btn_clear');
 
 
         const formatter = new Intl.NumberFormat('en-US', {
@@ -196,9 +197,43 @@ else
             }
         }
 
+        function removeAll(button) {
+            button.onclick = function (e) {
+                e.preventDefault();
+
+                let xhr = new XMLHttpRequest();
+
+                xhr.open('POST', '/Cart/RemoveAllItems/', true);
+                xhr.onload = function () {
+                    if (this.status == 200 && cartItems.children.length > 0) {
+                        total.style.opacity = 0;
+                        clear.style.opacity = 0;
+                        cart.style.opacity = 0;
+                        setTimeout(() => {
+                            total.parentnode.removechild(total);
+                            clear.parentnode.removechild(clear);
+                            cart.parentnode.removechild(cart);
+                        }, 500);
+                        setTimeout(() => {
+                            document.querySelector('#main').innerHTML += '<h2 id="no_items">No Items</h2 >';
+                            document.getElementById('no_items').style.opacity = 1;
+                        }, 510);
+                    }
+                    xhr.open('GET', `/Cart/Total`, true);
+                    xhr.onload = function () {
+
+                        totalNumber.innerHTML = `${formatter.format(this.responseText)}`;
+                    }
+                    xhr.send();
+                }
+                xhr.send();
+            }
+        }
+
         plusButtons.forEach(addItem);
         minusButtons.forEach(removeItem);
         deleteButton.forEach(removeItemFromCart);
+        removeAll(clearButton);
     });
 </script>
 
