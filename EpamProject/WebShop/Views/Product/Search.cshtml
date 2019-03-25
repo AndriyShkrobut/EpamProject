@@ -1,17 +1,15 @@
-﻿@model WebShop.ViewModels.Product.ProductIndexModel
+﻿@model WebShop.ViewModels.Product.SearchIndexModel
 
 @{
-    ViewData["Title"] = "catalog";
+    ViewData["Title"] = Model.SearchQuery;
 }
 
-<h1 style="font-size: 45px; margin-bottom: 50px;">Products</h1>
+<h1 style="font-size: 45px; margin-bottom: 50px;">Search Results for - '@Model.SearchQuery'</h1>
 
 @if (Model.ProductList.Any())
 {
     @if (User.IsInRole("admin"))
     {
-        <a asp-action="Create">Create New</a>
-
         <table class="table">
             <thead>
                 <tr>
@@ -46,7 +44,11 @@
     }
     else
     {
-        <div class="catalog">
+        <a asp-controller="Product" asp-action="Index" class="back_btn btn">
+            <img class="back_btn_img" src="~/img/back_icon.svg" alt="Go Back" />
+        </a>
+
+        <div class="catalog search_results">
             @foreach (var product in Model.ProductList)
             {
                 <form method="post">
@@ -70,5 +72,7 @@
 }
 else
 {
-    <h2 id="no_items" style="opacity: 1">No Items</h2>
+    <div id="no_results">
+        No Results Found
+    </div>
 }

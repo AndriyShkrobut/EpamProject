@@ -32,7 +32,10 @@ namespace Webshop.Service
 
         public IEnumerable<Product> GetAllFiltered(string searchQuery)
         {
-            return GetAll().Where(product => product.Name.Contains(searchQuery) || product.Description.Contains(searchQuery));
+            return
+                string.IsNullOrEmpty(searchQuery)
+                ? GetAll()
+                : GetAll().Where(product => product.Name.ToLower().Contains(searchQuery.ToLower()) || product.Description.ToLower().Contains(searchQuery.ToLower()));
         }
 
 

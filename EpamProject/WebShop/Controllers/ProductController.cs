@@ -45,23 +45,31 @@ namespace WebShop.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult Search(string searchQuery)
         {
-            ViewData["CurrentFilter"] = searchQuery;
-            var products = _productService.GetAllFiltered(searchQuery);
-            var productListing = products.Select(product => new ProductListingModel
+            if (!string.IsNullOrEmpty(searchQuery))
             {
-                Id = product.Id,
-                Name = product.Name,
-                ImageURL = product.ImageURL,
-                Price = product.Price
-            });
+                var products = _productService.GetAllFiltered(searchQuery);
+                var productListing = products.Select(product => new ProductListingModel
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    ImageURL = product.ImageURL,
+                    Price = product.Price
+                });
 
-            var productIndex = new ProductIndexModel
+                var model = new SearchIndexModel
+                {
+                    ProductList = productListing,
+                    SearchQuery = searchQuery
+                };
+                return View(model);
+            }
+            else
             {
-                ProductList = productListing
-            };
-            return View("Index", productIndex);
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult Details(int id)

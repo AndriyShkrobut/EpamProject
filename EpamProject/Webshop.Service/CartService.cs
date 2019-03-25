@@ -73,7 +73,7 @@ namespace Webshop.Service
             var user = _userService.GetById(id);
 
             var cart = GetByUserID(id);
-            if (cart == null)
+            if (cart == null && user == null)
             {
                 _context.Carts.Add(new Cart { ShopUser = user });
                 _context.SaveChanges();
