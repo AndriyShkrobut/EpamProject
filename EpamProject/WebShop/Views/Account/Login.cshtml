@@ -4,7 +4,7 @@
     ViewData["Title"] = "sign in";
 }
 
-<h1 style="font-size: 45px; margin-bottom: 50px;">Login</h1>
+<h1 style="font-size: 45px; margin-bottom: 50px;">Log In</h1>
 <form id="login_sign_in" class="" method="post" autocomplete="off" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
     <div asp-validation-summary="ModelOnly"></div>
 
@@ -25,5 +25,5 @@
 </form>
 <br />
 <div style="display: flex; font-size: 20px;" class="">
-    <h5 style="font-size: 20px;">Don't have an acoount? <a class="" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" asp-controller="Account">Sign Up</a></h5>
+    <h5 style="font-size: 20px;">Don't have an acount? <a class="" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" asp-controller="Account">Sign Up</a></h5>
 </div>
