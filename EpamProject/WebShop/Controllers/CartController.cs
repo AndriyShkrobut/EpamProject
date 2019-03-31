@@ -49,8 +49,8 @@ namespace WebShop.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [Authorize]
+        //[HttpPost]
         public IActionResult AddToCart(int id)
         {
             var product = _productService.GetByID(id);
@@ -59,8 +59,7 @@ namespace WebShop.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
+        //[HttpPost]
         public IActionResult RemoveFromCart(int id)
         {
             var cartItem = _cartItemService.GetByID(id);
@@ -79,7 +78,6 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public IActionResult RemoveAllItems()
         {
             var UserID = _userManager.GetUserId(User);

@@ -59,10 +59,6 @@
                         <h3 class="catalog_item_price">@string.Format("{0:C}", product.Price)</h3>
                         <input type="submit" asp-area="" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@product.Id" value="buy" class="catalog_item_tocart btn_wide">
                     </a>
-                    <input type="hidden" asp-for="@product.Id" name="id" />
-                    <input type="hidden" asp-for="@product.Name" name="name" />
-                    <input type="hidden" asp-for="@product.ImageURL" name="imageURL" />
-                    <input type="hidden" asp-for="@product.Price" name="price" />
                 </form>
             }
         </div>

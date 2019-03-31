@@ -20,9 +20,9 @@ namespace WebShop.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public IActionResult Register(string returnUrl = null)
         {
-            return View();
+            return View(new RegisterViewModel { ReturnUrl = returnUrl });
         }
 
         [HttpPost]
@@ -43,7 +43,14 @@ namespace WebShop.Controllers
                     await _userManager.AddToRoleAsync(user, "user");
                     _context.Carts.Add(new Cart { ShopUser = user });
                     _context.SaveChanges();
-                    return RedirectToAction("Index", "Product");
+                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                    {
+                        return Redirect(model.ReturnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Product");
+                    }
                 }
                 else
                 {
@@ -64,7 +71,6 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -90,8 +96,6 @@ namespace WebShop.Controllers
             return View(model);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();

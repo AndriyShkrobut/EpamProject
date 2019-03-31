@@ -17,9 +17,9 @@ namespace WebShop.ViewModels
         [Required]
         [Display(Name = "Name")]
         public string UserName { get; set; }
-        
+
         [Required]
-        [StringLength(100,ErrorMessage ="Error ",MinimumLength =5)]
+        [StringLength(100, ErrorMessage = "Error ", MinimumLength = 5)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -29,5 +29,7 @@ namespace WebShop.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Confirm your password")]
         public string PasswordConfirm { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }
