@@ -25,5 +25,5 @@
 </form>
 <br />
 <div style="display: flex; font-size: 20px;" class="">
-    <h5 style="font-size: 20px;">Don't have an acoount? <a class="" asp-action="Register" asp-controller="Account">Sign Up</a></h5>
+    <h5 style="font-size: 20px;">Don't have an acoount? <a class="" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" asp-controller="Account">Sign Up</a></h5>
 </div>
